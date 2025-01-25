@@ -8,7 +8,7 @@
     "build:docs": "pnpm --filter @bytetop/docs build",
     "changeset": "changeset",
     "version": "changeset version",
-    "publish": "changeset publish --access public"
+    "publish": "changeset publish --access public --registry=https://registry.npmjs.com/"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.12"

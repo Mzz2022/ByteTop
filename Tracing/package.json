@@ -4,10 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rollup -c",
-    "changeset": "changeset",
-    "packages-version": "changeset version",
-    "publish": "changeset publish --access public --registry=https://registry.npmjs.com/"
+    "build": "rollup -c"
   },
   "keywords": [],
   "author": "",

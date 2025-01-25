@@ -29,4 +29,4 @@ function output(path) {
 	];
 }
 
-export default [...packageFiles.map((path) => output(path)).flat()];
+export default [...packageFiles.flatMap((path) => output(path))];

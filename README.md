@@ -11,11 +11,10 @@
 
 ```
 ByteTop/
-  ├── Docs/     官方文档
-  ├── Platform/ 数据平台
-  ├── Server/   数据服务
-  ├── Tracing/  埋点SDK
-  ├── test/     各种测试服务
+  ├── Docs/      官方文档
+  ├── Platform/  数据平台
+  ├── Server/    数据服务
+  ├── Tracing/   埋点SDK
   ├── package.json
   ├── pnpm-workspace.yaml
   └── .changeset/

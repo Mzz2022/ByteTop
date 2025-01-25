@@ -1,3 +1,3 @@
-export function core(): any {
-  console.log('I am core');
+export function core(): void {
+	console.log("I am core");
 }
