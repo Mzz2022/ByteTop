@@ -1,17 +1,9 @@
-import type { NavigateOptions } from "react-router-dom";
-
-declare module "@react-types/shared" {
-  interface RouterConfig {
-    routerOptions: NavigateOptions;
-  }
-}
+import { useRoutes } from "react-router-dom";
+import routes from "./router";
 
 function App() {
-  return (
-    <>
-      <h1>欢迎来到ByteTop</h1>
-    </>
-  );
+  const element = useRoutes(routes);
+  return element;
 }
 
 export default App;

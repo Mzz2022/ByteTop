@@ -1,0 +1,17 @@
+{
+  "name": "@bytetop/docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "dependencies": {
+    "@bytetop/core": "workspace:*",
+    "@bytetop/common": "workspace:*"
+  },
+  "devDependencies": {
+    "vitepress": "^1.0.0-rc.40"
+  }
+}

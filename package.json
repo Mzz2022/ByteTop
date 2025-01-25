@@ -1,0 +1,17 @@
+{
+  "name": "@bytetop/root",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev:docs": "pnpm --filter @bytetop/docs dev",
+    "dev:platform": "pnpm --filter @bytetop/platform dev",
+    "build:docs": "pnpm --filter @bytetop/docs build",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "publish": "changeset publish --access public --registry=https://registry.npmjs.com/"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.12"
+  },
+  "packageManager": "pnpm@9.15.3+sha512.1f79bc245a66eb0b07c5d4d83131240774642caaa86ef7d0434ab47c0d16f66b04e21e0c086eb61e62c77efc4d7f7ec071afad3796af64892fae66509173893a"
+}

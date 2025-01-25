@@ -1,0 +1,23 @@
+{
+  "name": "@bytetop/core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "coverage": "vitest run --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "vitest": "^1.x",
+    "@vitest/coverage-v8": "^1.x",
+    "@vitest/ui": "^1.x"
+  }
+}

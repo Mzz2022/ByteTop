@@ -1,0 +1,6 @@
+packages:
+  - Docs
+  - Platform
+  - Server
+  - Tracing/packages/*
+  - Test
