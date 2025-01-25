@@ -1,0 +1,22 @@
+# 常规忽略项
+node_modules
+dist
+.DS_Store
+
+# 构建输出
+build
+lib
+
+# IDE 相关
+.idea
+.vscode
+*.swp
+*.swo
+
+# 日志文件
+*.log
+
+# 缓存文件
+cache
+.cache
+.pnpm-store

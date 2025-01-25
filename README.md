@@ -15,5 +15,19 @@ ByteTop/
   ├── Platform/ 数据平台
   ├── Server/   数据服务
   ├── Tracing/  埋点SDK
-  └── README.md
+  ├── test/     各种测试服务
+  ├── package.json
+  ├── pnpm-workspace.yaml
+  └── .changeset/
 ```
+
+## 3. 运行命令
+
+
+在根目录下：
+```sh
+pnpm run dev:docs  # 启动文档
+pnpm run dev:platform  # 启动数据平台
+```
+
+在各自文件夹下，直接按照各自的package.json中的scripts运行；

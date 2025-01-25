@@ -9,7 +9,9 @@ declare module "@react-types/shared" {
 function App() {
   return (
     <>
-      <h1>欢迎来到ByteTop</h1>
+      <h1 className="text-3xl font-bold underline text-center bg-blend-color">
+        欢迎来到ByteTop
+      </h1>
     </>
   );
 }
