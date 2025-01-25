@@ -16,6 +16,7 @@ ByteTop埋点项目数据平台
 
 ## 目录结构
 
+```
 platform/
 ├── public/
 ├── src/
@@ -32,6 +33,7 @@ platform/
 ├── tsconfig.json # TypeScript 配置
 ├── package.json # 项目依赖和脚本
 └── README.md # 项目说明
+```
 
 ## 安装
 
