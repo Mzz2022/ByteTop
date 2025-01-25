@@ -6,7 +6,7 @@ ByteTop埋点项目数据平台
 
 ## 技术栈
 
-- **React v20**: 开发框架
+- **React v18**: 开发框架
 - **TypeScript**: 开发语言
 - **Vite**: 构建工具
 - **HeroUI**: UI组件库
