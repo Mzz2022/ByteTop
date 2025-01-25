@@ -13,6 +13,7 @@ ByteTop埋点项目数据平台
 - **React Router**: 路由管理
 - **Tailwind CSS**: CSS 框架
 - **reactbits**: 动画效果
+- **Prettier-ESLint**: 代码质量规范
 
 ## 目录结构
 
