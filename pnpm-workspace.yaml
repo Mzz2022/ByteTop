@@ -2,5 +2,6 @@ packages:
   - Docs
   - Platform
   - Server
+  - Tracing
   - Tracing/packages/*
   - Test
