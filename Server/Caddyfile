@@ -1,0 +1,14 @@
+:24567 {
+    handle /* {
+        reverse_proxy server:24567 {
+            header_up X-Real-IP {remote_host}
+        }
+    }
+
+    header {
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Methods "GET, POST"
+        Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+        Access-Control-Max-Age "3600"
+    }
+} 

@@ -1,0 +1,101 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres111
+      POSTGRES_PASSWORD: postgres222
+      POSTGRES_DB: bytetop_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  server:
+    build:
+      context: .
+      dockerfile: Server/Dockerfile
+    # env_file:
+    #   - Server/.env
+    ports:
+      - "24567:24567"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - app-network
+    environment:
+      - DATABASE_URL=postgresql://postgres111:postgres222@postgres:5432/bytetop_db
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+  platform:
+    build:
+      context: .
+      dockerfile: Platform/Dockerfile
+    volumes:
+      - frontend_build:/dist
+    networks:
+      - app-network
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Platform/Caddyfile:/etc/caddy/Caddyfile
+      - frontend_build:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - platform
+    networks:
+      - app-network
+
+  redis:
+    image: redis/redis-stack:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-network
+    command: redis-server --appendonly yes
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - "8001:8001"
+    volumes:
+      - redisinsight_data:/db
+    networks:
+      - app-network
+
+  caddy-server:
+    image: caddy:2-alpine
+    volumes:
+      - ./Server/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_server_data:/data
+      - caddy_server_config:/config
+    depends_on:
+      - server
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  frontend_build:
+  caddy_data:
+  caddy_config:
+  caddy_server_data:
+  caddy_server_config:
+  postgres_data:
+  redis_data:
+  redisinsight_data:

@@ -1,0 +1,16 @@
+:80 {
+    root * /srv
+    file_server
+    try_files {path} /index.html
+
+    reverse_proxy /api/* server:24567
+    
+    encode gzip
+    
+    header {
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Methods "GET, POST"
+        Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+        Access-Control-Max-Age "3600"
+    }
+} 

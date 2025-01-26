@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@bytetop/tracing": "workspace:*",
     "@heroui/button": "2.2.9",
     "@heroui/code": "2.2.6",
     "@heroui/dropdown": "2.3.9",
