@@ -35,12 +35,13 @@ platform/
 
 ## 安装
 
-npm install
+pnpm install （统一使用pnpm！！！）
 
 ## 开发
 
-npm run dev
+pnpm run dev
 
 ## 构建
 
-npm run build
+pnpm run build
+

@@ -60,12 +60,20 @@ services:
     image: redis/redis-stack:latest
     ports:
       - "6379:6379"
-      - "8001:8001" # RedisInsight 默认端口
     volumes:
       - redis_data:/data
     networks:
       - app-network
     command: redis-server --appendonly yes
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - "8001:8001"
+    volumes:
+      - redisinsight_data:/db
+    networks:
+      - app-network
 
   caddy-server:
     image: caddy:2-alpine
@@ -90,3 +98,4 @@ volumes:
   caddy_server_config:
   postgres_data:
   redis_data:
+  redisinsight_data:
