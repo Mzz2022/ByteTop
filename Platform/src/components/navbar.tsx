@@ -131,9 +131,9 @@ const NavigationBar = () => {
             }}
           >
             <DropdownItem
-              description="Description for feature 1."
-              href="/data/overview"
               key="data_overview"
+              description="查看整体数据趋势和关键指标"
+              href="/data/overview"
               startContent={
                 <FaChartBar style={{ color: "#FFD700" }} size={30} />
               }
@@ -143,7 +143,7 @@ const NavigationBar = () => {
             <DropdownItem
               key="data_analytics"
               href="/data/analytics"
-              description="Description for feature 2."
+              description="深入分析数据维度和用户行为"
               startContent={
                 <FaUserFriends style={{ color: "#FF69B4" }} size={30} />
               }
@@ -177,7 +177,7 @@ const NavigationBar = () => {
             <DropdownItem
               key="visitor_customer_type"
               href="/visitors/customer-type"
-              description="Description for feature 1."
+              description="分析新客户与回头客的比例及行为差异"
               startContent={
                 <FaUserFriends style={{ color: "#FF4500" }} size={30} />
               }
@@ -187,7 +187,7 @@ const NavigationBar = () => {
             <DropdownItem
               key="visitor_geography"
               href="/visitors/geography"
-              description="Description for feature 2."
+              description="查看用户地域分布及区域特征"
               startContent={
                 <FaMapMarkedAlt style={{ color: "#32CD32" }} size={30} />
               }
@@ -197,7 +197,7 @@ const NavigationBar = () => {
             <DropdownItem
               key="visitor_devices"
               href="/visitors/devices"
-              description="Description for feature 3."
+              description="统计不同设备类型的访问情况"
               startContent={
                 <FaMobileAlt style={{ color: "#1E90FF" }} size={30} />
               }
@@ -230,7 +230,7 @@ const NavigationBar = () => {
           >
             <DropdownItem
               key="user_images"
-              description="Description for feature 1."
+              description="查看用户画像及特征分析"
               href="/users/image"
               startContent={
                 <FaUserCircle style={{ color: "#8A2BE2" }} size={30} />
@@ -241,7 +241,7 @@ const NavigationBar = () => {
             <DropdownItem
               key="user_loyalty"
               href="/users/loyalty"
-              description="Description for feature 2."
+              description="分析用户留存率和忠诚度指标"
               startContent={<FaHeart style={{ color: "#DC143C" }} size={30} />}
             >
               忠诚度分析
@@ -272,7 +272,7 @@ const NavigationBar = () => {
           >
             <DropdownItem
               key="performance_analysis"
-              description="Description for feature 1."
+              description="监测页面加载速度与性能指标"
               href="/performance/analysis"
               startContent={
                 <FaChartLine style={{ color: "#4169E1" }} size={30} />
@@ -282,7 +282,7 @@ const NavigationBar = () => {
             </DropdownItem>
             <DropdownItem
               key="performance_crash"
-              description="Description for feature 2."
+              description="追踪页面异常与崩溃情况统计"
               href="/performance/crash"
               startContent={
                 <FaExclamationTriangle style={{ color: "#FF4500" }} size={30} />
