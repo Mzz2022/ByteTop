@@ -1,10 +1,6 @@
 // src/pages/Dashboard.tsx
-import React from "react";
-import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
-  const navigate = useNavigate();
-
   return (
     <div className="w-full h-full p-6">
       <div className="bg-white rounded-lg shadow-sm p-10">
