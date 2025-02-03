@@ -10,4 +10,4 @@ export class UserBehaviorController {
     // TODO: 实现用户行为数据收集
     return { success: true };
   }
-} 
+}
