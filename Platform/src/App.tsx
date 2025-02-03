@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import NavigationBar from "./components/navbar";
 import LoginPage from "./pages/LoginPage";
+import DemoForCSSConfig from "./pages/DemoForCSSConfig";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -16,8 +17,8 @@ function App() {
     <>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/demo" element={<DemoForCSSConfig />} />
         
-        {/* 带导航栏的主布局 */}
         <Route path="/*" element={
           <div className="flex flex-col h-screen">
             <div className="fixed top-0 w-full z-50">
