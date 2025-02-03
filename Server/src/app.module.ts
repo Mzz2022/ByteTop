@@ -3,8 +3,9 @@ import { UserBehaviorModule } from './modules/userBehavior/userBehavior.module.j
 import { ErrorModule } from './modules/error/error.module.js';
 import { PerformanceModule } from './modules/performance/performance.module.js';
 import { cacheModule } from './config/cache.config';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
-  imports: [UserBehaviorModule, ErrorModule, PerformanceModule, cacheModule],
+  imports: [UserBehaviorModule, ErrorModule, PerformanceModule, cacheModule, UserModule],
 })
 export class AppModule {}
