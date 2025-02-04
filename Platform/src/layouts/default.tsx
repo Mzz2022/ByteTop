@@ -1,13 +1,13 @@
-import { Navbar } from "@/components/navbar";
+import NavigationBar from "@/components/NavigationBar";
 
-export default function DefaultLayout({
+export default function Navbar({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <div className="h-screen w-screen flex flex-col bg-gray-50">
-      <Navbar />
+      <NavigationBar />
       <main className="flex-1 w-full overflow-auto">
         {children}
       </main>

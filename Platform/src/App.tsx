@@ -2,9 +2,9 @@ import type { NavigateOptions } from "react-router-dom";
 
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import NavigationBar from "./components/navbar";
 import LoginPage from "./pages/LoginPage";
-import DemoForCSSConfig from "./pages/DemoForCSSConfig";
+import NavigationBar from "./components/NavigationBar";
+// import DemoForCSSConfig from "./pages/DemoForCSSConfig";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -17,8 +17,7 @@ function App() {
     <>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/demo" element={<DemoForCSSConfig />} />
-        
+        {/* <Route path="/demo" element={<DemoForCSSConfig />} /> */}
         <Route path="/*" element={
           <div className="flex flex-col h-screen">
             <div className="fixed top-0 w-full z-50">
