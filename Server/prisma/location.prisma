@@ -1,0 +1,9 @@
+model Location {
+  id          String   @id @default(uuid())  // 地理位置唯一标识符
+  ip          String   @unique               // IP地址，唯一
+  country     String                         // 国家
+  province    String                         // 省份
+  city        String                         // 城市
+
+  users       EventUser[]                    // 关联的用户列表
+}
