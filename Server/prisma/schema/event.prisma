@@ -6,10 +6,10 @@ enum EventType {
 }
 
 enum NetworkType {
-  UNKNOWN
-  CELLULAR_3G 
-  CELLULAR_4G
-  WIFI
+  UNKNOWN        // 未知网络类型
+  CELLULAR_3G    // 3G 网络
+  CELLULAR_4G    // 4G 网络
+  WIFI           // WIFI 网络
 }
 
 model Event {
@@ -42,5 +42,4 @@ model Context {
   events             Event[]                        // 关联的事件列表
 
   @@index([page_url])                               // 页面URL索引
-  @@index([user_agent])                             // 用户代理索引
 }
