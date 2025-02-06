@@ -3,7 +3,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
   DropdownItem,
   DropdownMenu,
@@ -21,7 +20,6 @@ import {
   FaChartLine,
   FaExclamationTriangle,
 } from "react-icons/fa";
-import { Link as RouterLink } from "react-router-dom";
 
 interface ChevronDownProps {
   fill?: string;
@@ -135,17 +133,17 @@ const NavigationBar = () => {
               description="查看整体数据趋势和关键指标"
               href="/data/overview"
               startContent={
-                <FaChartBar style={{ color: "#FFD700" }} size={30} />
+                <FaChartBar size={30} style={{ color: "#FFD700" }} />
               }
             >
               数据总揽
             </DropdownItem>
             <DropdownItem
               key="data_analytics"
-              href="/data/analytics"
               description="深入分析数据维度和用户行为"
+              href="/data/analytics"
               startContent={
-                <FaUserFriends style={{ color: "#FF69B4" }} size={30} />
+                <FaUserFriends size={30} style={{ color: "#FF69B4" }} />
               }
             >
               数据概览
@@ -176,30 +174,30 @@ const NavigationBar = () => {
           >
             <DropdownItem
               key="visitor_customer_type"
-              href="/visitors/customer-type"
               description="分析新客户与回头客的比例及行为差异"
+              href="/visitors/customer-type"
               startContent={
-                <FaUserFriends style={{ color: "#FF4500" }} size={30} />
+                <FaUserFriends size={30} style={{ color: "#FF4500" }} />
               }
             >
               新老顾客
             </DropdownItem>
             <DropdownItem
               key="visitor_geography"
-              href="/visitors/geography"
               description="查看用户地域分布及区域特征"
+              href="/visitors/geography"
               startContent={
-                <FaMapMarkedAlt style={{ color: "#32CD32" }} size={30} />
+                <FaMapMarkedAlt size={30} style={{ color: "#32CD32" }} />
               }
             >
               地域分析
             </DropdownItem>
             <DropdownItem
               key="visitor_devices"
-              href="/visitors/devices"
               description="统计不同设备类型的访问情况"
+              href="/visitors/devices"
               startContent={
-                <FaMobileAlt style={{ color: "#1E90FF" }} size={30} />
+                <FaMobileAlt size={30} style={{ color: "#1E90FF" }} />
               }
             >
               设备分析
@@ -233,16 +231,16 @@ const NavigationBar = () => {
               description="查看用户画像及特征分析"
               href="/users/image"
               startContent={
-                <FaUserCircle style={{ color: "#8A2BE2" }} size={30} />
+                <FaUserCircle size={30} style={{ color: "#8A2BE2" }} />
               }
             >
               用户画像
             </DropdownItem>
             <DropdownItem
               key="user_loyalty"
-              href="/users/loyalty"
               description="分析用户留存率和忠诚度指标"
-              startContent={<FaHeart style={{ color: "#DC143C" }} size={30} />}
+              href="/users/loyalty"
+              startContent={<FaHeart size={30} style={{ color: "#DC143C" }} />}
             >
               忠诚度分析
             </DropdownItem>
@@ -275,7 +273,7 @@ const NavigationBar = () => {
               description="监测页面加载速度与性能指标"
               href="/performance/analysis"
               startContent={
-                <FaChartLine style={{ color: "#4169E1" }} size={30} />
+                <FaChartLine size={30} style={{ color: "#4169E1" }} />
               }
             >
               性能分析
@@ -285,7 +283,7 @@ const NavigationBar = () => {
               description="追踪页面异常与崩溃情况统计"
               href="/performance/crash"
               startContent={
-                <FaExclamationTriangle style={{ color: "#FF4500" }} size={30} />
+                <FaExclamationTriangle size={30} style={{ color: "#FF4500" }} />
               }
             >
               页面崩溃分析

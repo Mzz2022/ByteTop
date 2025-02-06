@@ -26,6 +26,7 @@
     "@react-aria/visually-hidden": "3.8.12",
     "@react-types/shared": "3.26.0",
     "clsx": "2.1.1",
+    "echarts-for-react": "^3.0.2",
     "framer-motion": "11.15.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",

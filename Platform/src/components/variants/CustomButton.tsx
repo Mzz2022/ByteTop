@@ -19,11 +19,13 @@ export const CustomButton = extendVariants(Button, {
       xl: "px-8 min-w-28 h-14 text-large gap-4 rounded-medium",
     },
   },
-  defaultVariants: { // <- modify/add default variants
+  defaultVariants: {
+    // <- modify/add default variants
     color: "olive",
     size: "xl",
   },
-  compoundVariants: [ // <- modify/add compound variants
+  compoundVariants: [
+    // <- modify/add compound variants
     {
       isDisabled: true,
       color: "olive",

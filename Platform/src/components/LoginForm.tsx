@@ -1,5 +1,5 @@
 import React from "react";
-import {Tabs, Tab, Input, Link, Button, Card, CardBody} from "@heroui/react";
+import { Tabs, Tab, Input, Link, Button, Card, CardBody } from "@heroui/react";
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -20,20 +20,21 @@ export default function LoginForm() {
 
   const validateForm = () => {
     const newErrors: Partial<LoginFormData> = {};
-    
+
     if (!formData.username) {
       newErrors.username = "用户名不能为空";
     } else if (formData.username.length < 3) {
       newErrors.username = "用户名长度至少3个字符";
     }
-    
+
     if (!formData.password) {
       newErrors.password = "密码不能为空";
-    } 
+    }
     // else if (formData.password.length < 6) {
     //   newErrors.password = "密码长度至少6个字符";
     // }
     setErrors(newErrors);
+
     return Object.keys(newErrors).length === 0;
   };
 
@@ -44,20 +45,23 @@ export default function LoginForm() {
       if (formData.username === "admin" && formData.password === "admin") {
         navigate("/dashboard");
       } else {
-        setErrors({ password: "用户名或密码错误", username: "用户名或密码错误"});
+        setErrors({
+          password: "用户名或密码错误",
+          username: "用户名或密码错误",
+        });
       }
     }
   };
 
-  const handleInputChange = (field: keyof LoginFormData) => (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormData({ ...formData, [field]: e.target.value });
-    // 清除对应字段的错误信息
-    if (errors[field]) {
-      setErrors({ ...errors, [field]: undefined });
-    }
-  };
+  const handleInputChange =
+    (field: keyof LoginFormData) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData({ ...formData, [field]: e.target.value });
+      // 清除对应字段的错误信息
+      if (errors[field]) {
+        setErrors({ ...errors, [field]: undefined });
+      }
+    };
 
   const [selected, setSelected] = React.useState<React.Key>("login");
 
@@ -76,23 +80,23 @@ export default function LoginForm() {
               <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 <Input
                   isRequired
+                  errorMessage={errors.username}
+                  isInvalid={!!errors.username}
                   label="用户名"
                   placeholder="请输入用户名"
                   type="text"
                   value={formData.username}
                   onChange={handleInputChange("username")}
-                  errorMessage={errors.username}
-                  isInvalid={!!errors.username}
                 />
                 <Input
                   isRequired
+                  errorMessage={errors.password}
+                  isInvalid={!!errors.password}
                   label="密码"
                   placeholder="请输入密码"
                   type="password"
                   value={formData.password}
                   onChange={handleInputChange("password")}
-                  errorMessage={errors.password}
-                  isInvalid={!!errors.password}
                 />
                 <div className="flex gap-2 justify-end mt-2">
                   <Button fullWidth color="primary" type="submit">
@@ -101,10 +105,20 @@ export default function LoginForm() {
                 </div>
               </form>
             </Tab>
-            <Tab key="sign-up" title="注册" isDisabled>
+            <Tab key="sign-up" isDisabled title="注册">
               <form className="flex flex-col gap-4 h-[300px]">
-                <Input isRequired label="Name" placeholder="Enter your name" type="password" />
-                <Input isRequired label="username" placeholder="Enter your username" type="username" />
+                <Input
+                  isRequired
+                  label="Name"
+                  placeholder="Enter your name"
+                  type="password"
+                />
+                <Input
+                  isRequired
+                  label="username"
+                  placeholder="Enter your username"
+                  type="username"
+                />
                 <Input
                   isRequired
                   label="Password"
