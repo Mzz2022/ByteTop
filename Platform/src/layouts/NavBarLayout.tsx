@@ -37,7 +37,9 @@ export default function NavBarLayout({
         >
           <NavigationBar />
         </nav>
-        <main className="flex-1 w-full overflow-auto px-6">{children}</main>
+        <main className="flex-1 w-full overflow-auto px-16 pb-4">
+          {children}
+        </main>
       </div>
     </>
   );

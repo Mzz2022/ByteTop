@@ -9,49 +9,6 @@ import {
   getKeyValue,
 } from "@heroui/react";
 
-const data = {
-  code: 200,
-  message: "success",
-  data: {
-    current: {
-      page_views: 19413,
-      visits: 1305,
-      visitors: 1030,
-      ip_count: 970,
-      average_page_views: 15,
-      average_duration: "00:05:56",
-      bounce_rate: "7.59%",
-    },
-    previous: {
-      page_views: 41925,
-      visits: 2901,
-      visitors: 2481,
-      ip_count: 2328,
-      average_page_views: 15,
-      average_duration: "00:05:10",
-      bounce_rate: "10.38%",
-    },
-    comparison: {
-      page_views_change: "-53.70%",
-      visits_change: "-55.02%",
-      visitors_change: "-58.48%",
-      ip_count_change: "-58.33%",
-      average_page_views_change: "2.93%",
-      average_duration_change: "14.89%",
-      bounce_rate_change: "-26.88%",
-    },
-    year_comparison: {
-      page_views_change: "--",
-      visits_change: "--",
-      visitors_change: "--",
-      ip_count_change: "--",
-      average_page_views_change: "--",
-      average_duration_change: "--",
-      bounce_rate_change: "--",
-    },
-  },
-};
-
 export default function DataOverview() {
   const rows = [
     {
@@ -99,7 +56,7 @@ export default function DataOverview() {
   const columns = [
     {
       key: "rowName",
-      label: "--",
+      label: "",
     },
     {
       key: "pageViews",
@@ -130,7 +87,16 @@ export default function DataOverview() {
   return (
     <>
       <Table
+        removeWrapper
+        align="center"
         aria-label="data overview table"
+        classNames={{
+          base: "h-full text-lg",
+          table: "h-full",
+          th: "bg-transparent text-md", // Remove background and bold font
+          thead: "[&>tr]:first:shadow-none [&>tr]:first:rounded-none", // Remove shadow and rounded corners
+          td: "h-4", // Reduce font size
+        }}
         layout="fixed"
         radius="sm"
         shadow="sm"
