@@ -45,9 +45,6 @@ function Gaugeview() {
             borderWidth: 10,
           },
         },
-        title: {
-          show: false,
-        },
         detail: {
           valueAnimation: true,
           fontSize: 50,
