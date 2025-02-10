@@ -9,6 +9,8 @@ import {
   getKeyValue,
 } from "@heroui/react";
 
+import CustomContainer from "@/components/variants/CustomContainer";
+
 export default function DataOverview() {
   const rows = [
     {
@@ -86,37 +88,40 @@ export default function DataOverview() {
 
   return (
     <>
-      <Table
-        removeWrapper
-        align="center"
-        aria-label="data overview table"
-        classNames={{
-          base: "h-full text-lg",
-          table: "h-full",
-          th: "bg-transparent text-md", // Remove background and bold font
-          thead: "[&>tr]:first:shadow-none [&>tr]:first:rounded-none", // Remove shadow and rounded corners
-          td: "h-4", // Reduce font size
-        }}
-        layout="fixed"
-        radius="sm"
-        shadow="sm"
-      >
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
-        </TableHeader>
-        {/* <TableBody emptyContent={"No rows to display."}>{[]}</TableBody> */}
-        <TableBody items={rows}>
-          {(item) => (
-            <TableRow key={item.key}>
-              {(columnKey) => (
-                <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+      <CustomContainer className="col-span-12 h-64">
+        <h1>数据总览</h1>
+        <Table
+          removeWrapper
+          align="center"
+          aria-label="data overview table"
+          classNames={{
+            base: "h-full text-lg",
+            table: "h-full",
+            th: "bg-transparent text-md", // Remove background and bold font
+            thead: "[&>tr]:first:shadow-none [&>tr]:first:rounded-none", // Remove shadow and rounded corners
+            td: "h-4", // Reduce font size
+          }}
+          layout="fixed"
+          radius="sm"
+          shadow="sm"
+        >
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn key={column.key}>{column.label}</TableColumn>
+            )}
+          </TableHeader>
+          {/* <TableBody emptyContent={"No rows to display."}>{[]}</TableBody> */}
+          <TableBody items={rows}>
+            {(item) => (
+              <TableRow key={item.key}>
+                {(columnKey) => (
+                  <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </CustomContainer>
     </>
   );
 }

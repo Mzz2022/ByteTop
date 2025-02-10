@@ -3,6 +3,8 @@ import { Select, SelectItem, SharedSelection } from "@heroui/react";
 import { useCallback, useEffect, useMemo } from "react";
 import { create } from "zustand";
 
+import CustomContainer from "@/components/variants/CustomContainer";
+
 type TimeSeriesData = {
   time: string[];
   page_views: number[];
@@ -157,26 +159,33 @@ export default function DataLineview() {
   );
 
   return (
-    <div className="p-4">
-      <div className="mb-4 max-w-md">
-        <Select
-          label="选择查询指标"
-          placeholder="请选择指标"
-          selectedKeys={new Set(selectedMetrics)}
-          selectionMode="multiple"
-          onSelectionChange={handleSelectionChange}
-        >
-          {metrics.map((metric) => (
-            <SelectItem key={metric.key}>{metric.label}</SelectItem>
-          ))}
-        </Select>
+    <CustomContainer className="col-span-6 h-96">
+      <h1>趋势分析</h1>
+      <div className="p-4 h-full">
+        <div className="mb-4 max-w-sm h-[10%]">
+          <Select
+            label="查询指标"
+            labelPlacement="outside"
+            placeholder="请选择指标"
+            selectedKeys={new Set(selectedMetrics)}
+            selectionMode="multiple"
+            onSelectionChange={handleSelectionChange}
+            size="sm"
+          >
+            {metrics.map((metric) => (
+              <SelectItem key={metric.key}>{metric.label}</SelectItem>
+            ))}
+          </Select>
+        </div>
+        <div className="h-full">
+        <ReactECharts
+          notMerge={true}
+          option={chartOption}
+          opts={{ renderer: "svg" }}
+          style={{ height: "75%" }}
+        />
+        </div>
       </div>
-      <ReactECharts
-        notMerge={true}
-        option={chartOption}
-        opts={{ renderer: "svg" }}
-        style={{ height: "400px" }}
-      />
-    </div>
+    </CustomContainer>
   );
 }

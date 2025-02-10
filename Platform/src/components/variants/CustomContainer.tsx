@@ -10,7 +10,6 @@ const CustomContainer = ({ children, className = "" }: ContainerProps) => {
     <div
       className={`
         mx-auto 
-        h-full
         w-full
         rounded-xl
         border border-white/20
