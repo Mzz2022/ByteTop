@@ -11,7 +11,7 @@ import {
 
 import CustomContainer from "@/components/variants/CustomContainer";
 
-export default function DataOverview() {
+export default function DataOverview({ className = ""}: { className?: string }) {
   const rows = [
     {
       key: "3",
@@ -88,14 +88,27 @@ export default function DataOverview() {
 
   return (
     <>
-      <CustomContainer className="col-span-12 h-64">
+      <CustomContainer className={`${className}`}>
         <h1>数据总览</h1>
+        {/* <Select
+            label="时间维度"
+            labelPlacement="outside"
+            placeholder="请选择指标"
+            selectedKeys={new Set(selectedMetrics)}
+            selectionMode="multiple"
+            onSelectionChange={handleSelectionChange}
+            size="sm"
+          >
+            {metrics.map((metric) => (
+              <SelectItem key={metric.key}>{metric.label}</SelectItem>
+            ))}
+          </Select> */}
         <Table
           removeWrapper
           align="center"
           aria-label="data overview table"
           classNames={{
-            base: "h-full text-lg",
+            base: "h-full text-lg pb-8",
             table: "h-full",
             th: "bg-transparent text-md", // Remove background and bold font
             thead: "[&>tr]:first:shadow-none [&>tr]:first:rounded-none", // Remove shadow and rounded corners

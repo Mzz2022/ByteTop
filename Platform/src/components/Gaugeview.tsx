@@ -2,7 +2,7 @@ import ReactECharts from "echarts-for-react";
 
 import CustomContainer from "./variants/CustomContainer";
 
-function Gaugeview() {
+function Gaugeview({className = ""}: {className?: string}) {
   const option = {
     series: [
       {
@@ -64,7 +64,7 @@ function Gaugeview() {
 
   return (
     <>
-      <CustomContainer className="col-span-2 h-96">
+      <CustomContainer className={`${className}`}>
         <h1>UV</h1>
         <ReactECharts
           option={option}

@@ -17,17 +17,19 @@ function App() {
   return (
     <>
       <NavBarLayout>
-        <Routes>
-          <Route element={<Overview />} path="/data/overview" />
-          <Route element={<Analytics />} path="/data/analytics" />
-          <Route element={<Dashboard />} path="/visitors/customer-type" />
-          <Route element={<Dashboard />} path="/visitors/geography" />
-          <Route element={<Dashboard />} path="/visitors/devices" />
-          <Route element={<Dashboard />} path="/users/image" />
-          <Route element={<Dashboard />} path="/users/loyalty" />
-          <Route element={<Dashboard />} path="/performance/analysis" />
-          <Route element={<Dashboard />} path="/performance/crash" />
-        </Routes>
+        <div className="px-4 grid gap-3 grid-cols-12 mb-4">
+          <Routes>
+            <Route element={<Overview />} path="/data/overview" />
+            <Route element={<Analytics />} path="/data/analytics" />
+            <Route element={<Dashboard />} path="/visitors/customer-type" />
+            <Route element={<Dashboard />} path="/visitors/geography" />
+            <Route element={<Dashboard />} path="/visitors/devices" />
+            <Route element={<Dashboard />} path="/users/image" />
+            <Route element={<Dashboard />} path="/users/loyalty" />
+            <Route element={<Dashboard />} path="/performance/analysis" />
+            <Route element={<Dashboard />} path="/performance/crash" />
+          </Routes>
+        </div>
       </NavBarLayout>
     </>
   );

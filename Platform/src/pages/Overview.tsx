@@ -5,12 +5,10 @@ import Gaugeview from "@/components/Gaugeview";
 function Overview() {
   return (
     <>
-      <div className="px-4 grid gap-3 grid-cols-12 mb-4">
-        <DataOverview />
-        <DataLineview />
-        <Gaugeview />
-        <Gaugeview />
-      </div>
+      <DataOverview className="col-span-12 h-96"/>
+      <DataLineview className="col-span-6 h-96"/>
+      <Gaugeview className="col-span-3 h-96"/>
+      <Gaugeview className="col-span-3 h-96"/>
     </>
   );
 }

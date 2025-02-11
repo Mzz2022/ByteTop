@@ -1,5 +1,11 @@
+import DataLineview from "@/components/DataLineview";
+
 function Analytics({}) {
-  return <div>Analytics</div>;
+  return (
+    <>
+      <DataLineview className="col-span-12 h-[400px]" />
+    </>
+  )
 }
 
 export default Analytics;

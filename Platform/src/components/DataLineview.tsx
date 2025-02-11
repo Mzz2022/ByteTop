@@ -121,7 +121,7 @@ const generateChartOption = (
   };
 };
 
-export default function DataLineview() {
+export default function DataLineview({className}: {className: string}) {
   // 从 Zustand store 获取状态与更新函数
   const { selectedMetrics, chartData, setSelectedMetrics, setChartData } =
     useChartStore();
@@ -139,7 +139,7 @@ export default function DataLineview() {
         // 示例：const data = await fetchChartData();
         // setChartData(data);
       } catch (error) {
-        console.error("获取数据失败，使用模拟数据", error);
+        // console.error("获取数据失败，使用模拟数据", error);
       }
     };
 
@@ -159,7 +159,7 @@ export default function DataLineview() {
   );
 
   return (
-    <CustomContainer className="col-span-6 h-96">
+     <CustomContainer className={`${className}`}>
       <h1>趋势分析</h1>
       <div className="p-4 h-full">
         <div className="mb-4 max-w-sm h-[10%]">
@@ -169,8 +169,8 @@ export default function DataLineview() {
             placeholder="请选择指标"
             selectedKeys={new Set(selectedMetrics)}
             selectionMode="multiple"
-            onSelectionChange={handleSelectionChange}
             size="sm"
+            onSelectionChange={handleSelectionChange}
           >
             {metrics.map((metric) => (
               <SelectItem key={metric.key}>{metric.label}</SelectItem>
@@ -178,12 +178,12 @@ export default function DataLineview() {
           </Select>
         </div>
         <div className="h-full">
-        <ReactECharts
-          notMerge={true}
-          option={chartOption}
-          opts={{ renderer: "svg" }}
-          style={{ height: "75%" }}
-        />
+          <ReactECharts
+            notMerge={true}
+            option={chartOption}
+            opts={{ renderer: "svg" }}
+            style={{ height: "75%" }}
+          />
         </div>
       </div>
     </CustomContainer>
