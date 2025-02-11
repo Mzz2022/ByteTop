@@ -15,7 +15,6 @@ enum NetworkType {
 model Event {
   id          String     @id @default(uuid())  // 事件唯一标识符
   project_id  String                           // 项目ID
-  event_id    String     @unique               // 前端事件ID，唯一
   event_type  EventType                        // 事件类型，限定为枚举值
   timestamp   DateTime                         // 事件发生时间
   user_id     String                           // 用户ID

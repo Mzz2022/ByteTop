@@ -41,6 +41,11 @@ export class IpService {
       };
     } catch (error) {
       console.error(`Failed to parse IP location for ${ip}:`, error);
+      return {
+        country: '未知',
+        province: '未知',
+        city: '未知',
+      };
     }
   }
 }

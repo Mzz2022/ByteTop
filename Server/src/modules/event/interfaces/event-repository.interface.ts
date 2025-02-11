@@ -2,19 +2,17 @@ import {
   Event,
   EventUser,
   Context,
+  Location,
   NetworkType,
   EventType,
   Prisma,
-  Location,
 } from '@prisma/client';
 
 export interface ILocation {
   ip: string;
-  country?: string;
-  region?: string;
-  city?: string;
-  latitude?: number;
-  longitude?: number;
+  country: string;
+  province: string;
+  city: string;
 }
 
 export interface IEventUser {
@@ -33,18 +31,21 @@ export interface IEventContext {
   user_agent: string;
 }
 
+export interface IEvent {
+  project_id: string;
+  id: string;
+  event_type: EventType;
+  timestamp: Date;
+  user_id: string;
+  context_id: string;
+  payload: Prisma.JsonObject;
+}
+
 export interface IEventRepository {
-  findLocationByIp(ip: string): Promise<Location | null>;
+  findLocation(ip: string): Promise<Location | null>;
   createLocation(location: ILocation): Promise<Location>;
+  findUser(id: string): Promise<EventUser | null>;
   createUser(user: IEventUser): Promise<EventUser>;
   createContext(context: IEventContext): Promise<Context>;
-  createEvent(event: {
-    project_id: string;
-    event_id: string;
-    event_type: EventType;
-    timestamp: Date;
-    user_id: string;
-    context_id: string;
-    payload: Prisma.JsonValue;
-  }): Promise<Event>;
+  createEvent(event: IEvent): Promise<Event>;
 }

@@ -18,9 +18,6 @@ class EventUserDto {
   @IsString()
   id: string;
 
-  @IsString()
-  ip: string;
-
   @IsOptional()
   @IsString()
   device_id?: string;
@@ -59,7 +56,7 @@ export class CreateEventDto {
   project_id: string;
 
   @IsString()
-  event_id: string;
+  id: string;
 
   @IsEnum(EventType)
   event_type: EventType;
