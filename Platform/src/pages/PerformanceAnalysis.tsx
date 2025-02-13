@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import ReactECharts from "echarts-for-react";
-import { Listbox } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/solid";
 import { Select, SelectItem } from "@heroui/react";
 
 interface PerformanceData {
@@ -150,7 +148,7 @@ const PerformanceAnalysis = () => {
     fetchData();
   }, []);
 
-  const handleMetricChange = (keys: SharedSelection) => {
+  const handleMetricChange = (keys: any) => {
     const newSelection = Array.from(keys) as string[];
     setSelectedMetrics(
       newSelection.length > 0 ? newSelection : [metricOptions[0].id]

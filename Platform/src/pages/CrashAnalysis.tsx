@@ -1,4 +1,3 @@
-import React from "react";
 import ReactECharts from "echarts-for-react";
 
 export interface CrashAnalysisData {
@@ -122,7 +121,7 @@ const generateMockDistributionData = (): CrashDistributionItem[] => {
     "Xiaomi 13",
   ];
 
-  return Array.from({ length: 10 }, (_, i) => {
+  return Array.from({ length: 10 }, () => {
     const visitCount = Math.floor(Math.random() * 10000) + 1000;
     const crashCount = Math.floor(Math.random() * 100) + 10;
     const userCount = Math.floor(visitCount * 0.7);
