@@ -96,6 +96,53 @@ const generateMockData = (): CrashAnalysisData => {
 
 const mockData = generateMockData();
 
+// 添加新的接口定义
+interface CrashDistributionItem {
+  version: string;
+  os: string;
+  device: string;
+  visitCount: number;
+  crashCount: number;
+  crashRate: number;
+  userCount: number;
+  crashUserCount: number;
+  crashUserRate: number;
+  crashShare: number;
+}
+
+// 生成模拟数据
+const generateMockDistributionData = (): CrashDistributionItem[] => {
+  const versions = ["1.0.0", "1.0.1", "1.1.0", "1.1.1", "1.2.0"];
+  const osTypes = ["iOS 16", "iOS 17", "Android 13", "Android 14"];
+  const devices = [
+    "iPhone 14",
+    "iPhone 15",
+    "Pixel 7",
+    "Galaxy S23",
+    "Xiaomi 13",
+  ];
+
+  return Array.from({ length: 10 }, (_, i) => {
+    const visitCount = Math.floor(Math.random() * 10000) + 1000;
+    const crashCount = Math.floor(Math.random() * 100) + 10;
+    const userCount = Math.floor(visitCount * 0.7);
+    const crashUserCount = Math.floor(crashCount * 0.8);
+
+    return {
+      version: versions[Math.floor(Math.random() * versions.length)],
+      os: osTypes[Math.floor(Math.random() * osTypes.length)],
+      device: devices[Math.floor(Math.random() * devices.length)],
+      visitCount,
+      crashCount,
+      crashRate: Number(((crashCount / visitCount) * 100).toFixed(2)),
+      userCount,
+      crashUserCount,
+      crashUserRate: Number(((crashUserCount / userCount) * 100).toFixed(2)),
+      crashShare: Number(((crashCount / 1000) * 100).toFixed(2)), // 假设总崩溃数为1000
+    };
+  });
+};
+
 const CrashAnalysis = () => {
   // 获取当前小时的数据
   const currentHourData = mockData.crash_analysis["00:00"];
@@ -107,6 +154,9 @@ const CrashAnalysis = () => {
   const browserData = Object.entries(
     mockData.crash_analysis["00:00"].browser_distribution || {}
   );
+
+  // 添加分布数据
+  const distributionData = generateMockDistributionData();
 
   return (
     <div className="grid grid-cols-1 gap-4 p-4">
@@ -232,37 +282,224 @@ const CrashAnalysis = () => {
         </div>
       </div>
 
-      {/* 错误信息卡片 - 保持现有样式 */}
-      <div className="col-span-full bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      {/* 错误信息卡片 */}
+      {/* <div className="col-span-full bg-white rounded-lg shadow-sm border border-gray-200 p-4">
         <h3 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">
           错误信息汇总
         </h3>
-        <div className="space-y-2">
-          {mockData.crash_analysis["00:00"].error_messages?.map((msg, i) => (
-            <div
-              key={i}
-              className="flex items-center p-3 bg-red-50 border-l-4 border-red-400 rounded-sm hover:bg-red-100 transition-colors"
-            >
-              <svg
-                className="w-5 h-5 text-red-500 mr-3 shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                />
-              </svg>
-              <span className="text-gray-700 font-mono text-sm">{msg}</span>
-            </div>
-          )) ?? (
-            <div className="text-center text-gray-400 py-4 text-sm">
-              当前时段无错误信息
-            </div>
-          )}
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  序号
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  错误信息
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  状态
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {mockData.crash_analysis["00:00"].error_messages?.map(
+                (msg, i) => (
+                  <tr key={i} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {i + 1}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <svg
+                          className="w-5 h-5 text-red-500 mr-3 shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                          />
+                        </svg>
+                        <span className="text-sm font-medium text-gray-900">
+                          {msg}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                        活跃
+                      </span>
+                    </td>
+                  </tr>
+                )
+              ) ?? (
+                <tr>
+                  <td
+                    colSpan={3}
+                    className="px-6 py-4 text-center text-gray-400 text-sm"
+                  >
+                    当前时段无错误信息
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div> */}
+
+      {/* 更新崩溃分布表格 */}
+      <div className="col-span-full bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-sm font-semibold text-gray-700">崩溃分布</h3>
+          <div className="flex gap-4">
+            <input
+              type="search"
+              placeholder="请输入应用版本"
+              className="px-3 py-1 border border-gray-200 rounded-lg text-sm"
+            />
+            <select className="px-3 py-1 border border-gray-200 rounded-lg text-sm">
+              <option value="">操作系统：全部</option>
+              <option value="ios">iOS</option>
+              <option value="android">Android</option>
+            </select>
+          </div>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  序号
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  应用版本
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  操作系统
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  设备型号
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  访问次数
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  崩溃次数
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  崩溃率
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  访问用户数
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  崩溃触发用户数
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  崩溃触发用户占比
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  崩溃数占比
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {distributionData.length > 0 ? (
+                distributionData.map((item, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {index + 1}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {item.version}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {item.os}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {item.device}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {item.visitCount}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {item.crashCount}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {item.crashRate}%
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {item.userCount}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {item.crashUserCount}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {item.crashUserRate}%
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {item.crashShare}%
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={11}
+                    className="px-6 py-4 text-center text-gray-400 text-sm"
+                  >
+                    暂无数据
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
