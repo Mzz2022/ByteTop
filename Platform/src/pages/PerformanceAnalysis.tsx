@@ -26,6 +26,21 @@ interface MetricOption {
   group: string;
 }
 
+// 添加新的接口定义
+interface PerformanceDistributionItem {
+  page: string;
+  fcp: number;
+  lcp: number;
+  cls: number;
+  fid: number;
+  ttfb: number;
+  tti: number;
+  onloadTime: number;
+  jsExecutionTime: number;
+  resourceLoadTime: number;
+  pageViews: number;
+}
+
 // 模拟数据生成函数
 const generateMockData = (): PerformanceData => {
   const data: PerformanceData = {};
@@ -47,6 +62,34 @@ const generateMockData = (): PerformanceData => {
   return data;
 };
 
+// 生成模拟分布数据
+const generateDistributionData = (): PerformanceDistributionItem[] => {
+  const pages = [
+    "/home",
+    "/product-list",
+    "/product-detail",
+    "/cart",
+    "/checkout",
+    "/user-profile",
+    "/settings",
+    "/search",
+  ];
+
+  return pages.map((page) => ({
+    page,
+    fcp: Number((Math.random() * 2 + 0.5).toFixed(2)),
+    lcp: Number((Math.random() * 4 + 1).toFixed(2)),
+    cls: Number((Math.random() * 0.1).toFixed(3)),
+    fid: Math.floor(Math.random() * 100 + 20),
+    ttfb: Math.floor(Math.random() * 200 + 50),
+    tti: Number((Math.random() * 5 + 2).toFixed(2)),
+    onloadTime: Number((Math.random() * 6 + 3).toFixed(2)),
+    jsExecutionTime: Math.floor(Math.random() * 3000 + 1000),
+    resourceLoadTime: Number((Math.random() * 3 + 1).toFixed(2)),
+    pageViews: Math.floor(Math.random() * 10000 + 1000),
+  }));
+};
+
 const PerformanceAnalysis = () => {
   const [performanceData, setPerformanceData] = useState<PerformanceData>({});
   const [loading, setLoading] = useState(true);
@@ -56,6 +99,9 @@ const PerformanceAnalysis = () => {
     "ttfb",
     "resource_load_time",
   ]);
+  const [distributionData] = useState<PerformanceDistributionItem[]>(
+    generateDistributionData()
+  );
 
   const metricOptions: MetricOption[] = [
     // 加载时间指标组
@@ -318,6 +364,115 @@ const PerformanceAnalysis = () => {
           }}
           style={{ height: "400px" }}
         />
+      </div>
+
+      {/* 性能数据汇总表格 */}
+      <div className="bg-white rounded-lg shadow-lg p-4 mt-6">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-sm font-semibold text-gray-700">性能数据汇总</h3>
+          <div className="flex gap-4">
+            <input
+              type="search"
+              placeholder="搜索页面"
+              className="px-3 py-1 border border-gray-200 rounded-lg text-sm"
+            />
+          </div>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  页面
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  访问量
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  首屏时间
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  最大内容绘制
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  累计布局偏移
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  首次输入延迟
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  白屏时间
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  可交互时间
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  资源加载时间
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {distributionData.map((item, index) => (
+                <tr key={index} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {item.page}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {item.pageViews.toLocaleString()}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {item.fcp}s
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {item.lcp}s
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {item.cls}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {item.fid}ms
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {item.ttfb}ms
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {item.tti}s
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {item.resourceLoadTime}s
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
