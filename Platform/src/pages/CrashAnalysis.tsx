@@ -159,9 +159,9 @@ const CrashAnalysis = () => {
   const distributionData = generateMockDistributionData();
 
   return (
-    <div className="grid grid-cols-1 gap-4 p-4">
-      {/* 添加统计卡片 */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <div className="w-full px-2 py-8 sm:px-0">
+      {/* 统计卡片 */}
+      <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
         <h3 className="text-sm font-semibold text-gray-700 mb-4">流量概览</h3>
         <div className="flex gap-4">
           <div className="flex-1 flex flex-col">
@@ -199,8 +199,8 @@ const CrashAnalysis = () => {
         </div>
       </div>
 
-      {/* 崩溃趋势图表 - 添加卡片样式 */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      {/* 崩溃趋势图表 */}
+      <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
         <ReactECharts
           option={{
             title: { text: "每小时崩溃趋势" },
@@ -246,9 +246,9 @@ const CrashAnalysis = () => {
         />
       </div>
 
-      {/* 饼图容器 - 调整尺寸 */}
-      <div className="flex flex-row gap-4 h-[300px]">
-        <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      {/* 饼图容器 */}
+      <div className="flex gap-4 mb-6">
+        <div className="flex-1 bg-white rounded-lg shadow-lg p-4">
           <ReactECharts
             option={{
               title: { text: "设备分布" },
@@ -261,10 +261,10 @@ const CrashAnalysis = () => {
                 },
               ],
             }}
-            style={{ height: "100%" }}
+            style={{ height: "300px" }}
           />
         </div>
-        <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="flex-1 bg-white rounded-lg shadow-lg p-4">
           <ReactECharts
             option={{
               title: { text: "浏览器分布" },
@@ -277,7 +277,7 @@ const CrashAnalysis = () => {
                 },
               ],
             }}
-            style={{ height: "100%" }}
+            style={{ height: "300px" }}
           />
         </div>
       </div>
@@ -361,7 +361,7 @@ const CrashAnalysis = () => {
       </div> */}
 
       {/* 更新崩溃分布表格 */}
-      <div className="col-span-full bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div className="bg-white rounded-lg shadow-lg p-4">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-sm font-semibold text-gray-700">崩溃分布</h3>
           <div className="flex gap-4">

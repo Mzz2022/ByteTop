@@ -7,6 +7,7 @@ import Overview from "./pages/Overview";
 import Analytics from "./pages/Analytics";
 import NavBarLayout from "./layouts/NavBarLayout";
 import CrashAnalysis from "./pages/CrashAnalysis";
+import PerformanceAnalysis from "./pages/PerformanceAnalysis";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -27,7 +28,10 @@ function App() {
             <Route element={<Dashboard />} path="/visitors/devices" />
             <Route element={<Dashboard />} path="/users/image" />
             <Route element={<Dashboard />} path="/users/loyalty" />
-            <Route element={<Dashboard />} path="/performance/analysis" />
+            <Route
+              element={<PerformanceAnalysis />}
+              path="/performance/analysis"
+            />
             <Route element={<CrashAnalysis />} path="/performance/crash" />
           </Routes>
         </div>

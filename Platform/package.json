@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@bytetop/tracing": "workspace:*",
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
     "@heroui/button": "2.2.9",
     "@heroui/code": "2.2.6",
     "@heroui/dropdown": "2.3.9",
