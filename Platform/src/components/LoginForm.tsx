@@ -72,7 +72,7 @@ export default function LoginForm() {
           <Tabs
             fullWidth
             aria-label="Tabs form"
-            selectedKey={selected}
+            selectedKey={selected as any}
             size="md"
             onSelectionChange={setSelected}
           >

@@ -21,17 +21,13 @@ export default function NavBarLayout({
 
   return (
     <>
-      <div className="h-screen w-screen flex flex-col">
+      <div className="h-screen w-screen flex flex-col bg-gray-100">
         {/* 占位元素防止布局跳动 */}
         <div className={`h-16 ${isScrolled ? "block" : "hidden"}`} />
         <nav
           className={`
         w-full 
-        ${
-          isScrolled
-            ? "fixed top-0 bg-white shadow-md z-50"
-            : "relative bg-transparent"
-        }
+        ${isScrolled ? "fixed top-0 shadow-md z-50" : "relative bg-transparent"}
         transition-all duration-300
       `}
         >
