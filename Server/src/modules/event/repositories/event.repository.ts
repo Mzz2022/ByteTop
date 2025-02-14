@@ -6,7 +6,7 @@ import {
   IEventContext,
   ILocation,
   IEvent,
-} from '../interfaces/event-repository.interface';
+} from './event.interface';
 import { Event, EventUser, Context, Location } from '@prisma/client';
 
 @Injectable()

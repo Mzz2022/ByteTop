@@ -2,7 +2,7 @@ import { Body, Controller, Post, Req } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventsDto } from './dto/create-event.dto';
 import { Event } from '@prisma/client';
-import { IpService } from './services/ip.service';
+import { IpService } from '../../common/ip-services/ip.service';
 import { Request } from 'express';
 
 @Controller('events')

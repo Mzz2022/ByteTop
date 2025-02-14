@@ -1,14 +1,18 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { CreateEventDto, CreateEventsDto } from './dto/create-event.dto';
 import { Event } from '@prisma/client';
-import { IEventRepository } from './interfaces/event-repository.interface';
-import { IpService } from './services/ip.service';
+import { IEventRepository } from './repositories/event.interface';
+import { IpService } from '../../common/ip-services/ip.service';
+import { IEventQueue } from '../../common/redis/queue.interface';
+import { format } from 'date-fns';
 
 @Injectable()
 export class EventService {
   constructor(
     @Inject('IEventRepository')
     private eventRepository: IEventRepository,
+    @Inject('IEventQueue')
+    private eventQueue: IEventQueue,
     private ipService: IpService,
   ) {}
 
@@ -42,11 +46,22 @@ export class EventService {
     const eventContext = await this.eventRepository.createContext(context);
 
     // 创建事件
-    return this.eventRepository.createEvent({
+    const event = await this.eventRepository.createEvent({
       ...eventData,
       user_id: eventUser.id,
       context_id: eventContext.id,
     });
+
+    // 将事件加入队列
+    const hour = format(eventDto.timestamp, 'yyyy-MM-dd-HH');
+    await this.eventQueue.push({
+      project_id: eventDto.project_id,
+      event_type: eventDto.event_type,
+      hour,
+      event,
+    });
+
+    return event;
   }
 
   async createMany(
