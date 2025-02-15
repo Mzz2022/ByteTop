@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import ReactECharts from "echarts-for-react";
-import { Select, SelectItem } from "@heroui/react";
+import { TimeRangeFilter } from "@/components/buttons/TimeRangeFilter";
+import { PerformanceChart } from "@/components/charts/PerformanceChart";
+import { PerformanceTable } from "@/components/tables/PerformanceTable";
+import { MetricCard } from "@/components/tables/MetricCard";
 
-interface PerformanceData {
+export interface PerformanceData {
   [hour: string]: {
     fcp: number;
     lcp: number;
@@ -17,7 +19,7 @@ interface PerformanceData {
   };
 }
 
-interface MetricOption {
+export interface MetricOption {
   id: string;
   name: string;
   color: string;
@@ -25,7 +27,7 @@ interface MetricOption {
 }
 
 // 添加新的接口定义
-interface PerformanceDistributionItem {
+export interface PerformanceDistributionItem {
   page: string;
   fcp: number;
   lcp: number;
@@ -163,315 +165,52 @@ const PerformanceAnalysis = () => {
     );
   }
 
-  return (
-    <div className="w-full px-2 py-8 sm:px-0">
-      {/* 过滤器 */}
-      <div className="mb-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">过滤器</h2>
-        <div className="flex gap-4">
-          <button
-            onClick={() => setTimeRange("24h")}
-            className={`px-4 py-2 rounded-lg text-sm font-medium ${
-              timeRange === "24h"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-            }`}
-          >
-            24 小时
-          </button>
-          <button
-            onClick={() => setTimeRange("7d")}
-            className={`px-4 py-2 rounded-lg text-sm font-medium ${
-              timeRange === "7d"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-            }`}
-          >
-            7 天
-          </button>
-          <button
-            onClick={() => setTimeRange("30d")}
-            className={`px-4 py-2 rounded-lg text-sm font-medium ${
-              timeRange === "30d"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-            }`}
-          >
-            30 天
-          </button>
-        </div>
-      </div>
+  const currentData = performanceData["00:00"];
 
-      {/* 性能指标卡片 */}
+  return (
+    <div className="w-full px-2 py-8 sm:px-0 col-span-12">
+      <TimeRangeFilter timeRange={timeRange} setTimeRange={setTimeRange} />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* 加载时间指标卡片 */}
-        <div className="bg-white rounded-lg shadow-lg p-4">
-          <h3 className="text-sm font-medium text-gray-700 mb-4">
-            页面加载性能
-          </h3>
-          <div className="space-y-4">
-            <div>
-              <div className="text-sm font-medium text-gray-500">
-                首屏时间 (FCP)
-              </div>
-              <div className="text-xl font-semibold text-gray-900">
-                {(performanceData["00:00"]?.fcp || 0).toFixed(2)}s
-              </div>
-            </div>
-            <div>
-              <div className="text-sm font-medium text-gray-500">
-                最大内容绘制 (LCP)
-              </div>
-              <div className="text-xl font-semibold text-gray-900">
-                {(performanceData["00:00"]?.lcp || 0).toFixed(2)}s
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* 交互性能指标卡片 */}
-        <div className="bg-white rounded-lg shadow-lg p-4">
-          <h3 className="text-sm font-medium text-gray-700 mb-4">
-            交互响应性能
-          </h3>
-          <div className="space-y-4">
-            <div>
-              <div className="text-sm font-medium text-gray-500">
-                首次输入延迟 (FID)
-              </div>
-              <div className="text-xl font-semibold text-gray-900">
-                {performanceData["00:00"]?.fid || 0}ms
-              </div>
-            </div>
-            <div>
-              <div className="text-sm font-medium text-gray-500">
-                累计布局偏移 (CLS)
-              </div>
-              <div className="text-xl font-semibold text-gray-900">
-                {(performanceData["00:00"]?.cls || 0).toFixed(3)}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* 资源加载指标卡片 */}
-        <div className="bg-white rounded-lg shadow-lg p-4">
-          <h3 className="text-sm font-medium text-gray-700 mb-4">
-            资源加载性能
-          </h3>
-          <div className="space-y-4">
-            <div>
-              <div className="text-sm font-medium text-gray-500">
-                白屏时间 (TTFB)
-              </div>
-              <div className="text-xl font-semibold text-gray-900">
-                {performanceData["00:00"]?.ttfb || 0}ms
-              </div>
-            </div>
-            <div>
-              <div className="text-sm font-medium text-gray-500">
-                资源加载时间
-              </div>
-              <div className="text-xl font-semibold text-gray-900">
-                {(performanceData["00:00"]?.resource_load_time || 0).toFixed(2)}
-                s
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 趋势图表 */}
-      <div className="bg-white rounded-lg shadow-lg p-4">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-sm font-medium text-gray-700">性能趋势</h3>
-
-          {/* 替换 Listbox 为 Select */}
-          <div className="w-72">
-            <Select
-              label="查询指标"
-              labelPlacement="outside"
-              placeholder="请选择指标"
-              selectedKeys={new Set(selectedMetrics)}
-              selectionMode="multiple"
-              size="sm"
-              onSelectionChange={handleMetricChange}
-            >
-              {metricOptions.map((metric) => (
-                <SelectItem key={metric.id}>{metric.name}</SelectItem>
-              ))}
-            </Select>
-          </div>
-        </div>
-
-        <ReactECharts
-          key={selectedMetrics.join(",")}
-          option={{
-            tooltip: {
-              trigger: "axis",
-              formatter: function (params: any) {
-                let result = params[0].name + "<br/>";
-                params.forEach((param: any) => {
-                  result += `${param.seriesName}: ${param.value}s<br/>`;
-                });
-                return result;
-              },
-            },
-            legend: {
-              data: selectedMetrics.map(
-                (id) => metricOptions.find((m) => m.id === id)?.name || id
-              ),
-              bottom: 0,
-            },
-            grid: {
-              left: "3%",
-              right: "4%",
-              bottom: "10%",
-              containLabel: true,
-            },
-            xAxis: {
-              type: "category",
-              data: Object.keys(performanceData),
-              axisLabel: {
-                rotate: 45,
-              },
-            },
-            yAxis: {
-              type: "value",
-              name: "时间(s)",
-            },
-            series: selectedMetrics.map((metricId) => {
-              const metric = metricOptions.find((m) => m.id === metricId);
-              return {
-                name: metric?.name || metricId,
-                type: "line",
-                smooth: true,
-                data: Object.values(performanceData).map((d) => {
-                  const value = d[metricId as keyof typeof d];
-                  // 对某些需要转换的指标进行处理
-                  return metricId === "ttfb" ? Number(value) / 1000 : value;
-                }),
-                areaStyle: {
-                  opacity: 0.1,
-                },
-                itemStyle: {
-                  color: metric?.color,
-                },
-              };
-            }),
-          }}
-          style={{ height: "400px" }}
+        <MetricCard
+          title="页面加载性能"
+          subtitle1="首屏时间 (FCP)"
+          subtitle2="最大内容绘制 (LCP)"
+          data1={currentData.fcp}
+          data2={currentData.lcp}
+          unit1="s"
+          unit2="s"
+        />
+        <MetricCard
+          title="交互响应性能"
+          subtitle1="首次输入延迟 (FID)"
+          subtitle2="累计布局偏移 (CLS)"
+          data1={currentData.fid}
+          data2={currentData.cls}
+          unit1="ms"
+          unit2=""
+        />
+        <MetricCard
+          title="资源加载性能"
+          subtitle1="白屏时间 (TTFB)"
+          subtitle2="资源加载时间"
+          data1={currentData.ttfb}
+          data2={currentData.resource_load_time}
+          unit1="ms"
+          unit2="s"
         />
       </div>
 
-      {/* 性能数据汇总表格 */}
-      <div className="bg-white rounded-lg shadow-lg p-4 mt-6">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-sm font-semibold text-gray-700">性能数据汇总</h3>
-          <div className="flex gap-4">
-            <input
-              type="search"
-              placeholder="搜索页面"
-              className="px-3 py-1 border border-gray-200 rounded-lg text-sm"
-            />
-          </div>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  页面
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  访问量
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  首屏时间
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  最大内容绘制
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  累计布局偏移
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  首次输入延迟
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  白屏时间
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  可交互时间
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  资源加载时间
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {distributionData.map((item, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {item.page}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {item.pageViews.toLocaleString()}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {item.fcp}s
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {item.lcp}s
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {item.cls}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {item.fid}ms
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {item.ttfb}ms
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {item.tti}s
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {item.resourceLoadTime}s
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {/* 性能趋势图表 */}
+      <PerformanceChart
+        performanceData={performanceData}
+        selectedMetrics={selectedMetrics}
+        metricOptions={metricOptions}
+        onMetricChange={handleMetricChange}
+      />
+
+      {/* 性能数据表格 */}
+      <PerformanceTable data={distributionData} />
     </div>
   );
 };

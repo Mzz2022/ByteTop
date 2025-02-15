@@ -1,4 +1,4 @@
-import DataLine from "@/components/DataLine";
+import DataLine from "@/components/charts/DataLine";
 
 function DataAnalytics({}) {
   return (

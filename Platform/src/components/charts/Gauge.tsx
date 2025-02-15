@@ -1,6 +1,5 @@
 import ReactECharts from "echarts-for-react";
-
-import CustomContainer from "./variants/CustomContainer";
+import CustomContainer from "../variants/CustomContainer";
 
 export default function Gauge({ className = "" }: { className?: string }) {
   const option = {

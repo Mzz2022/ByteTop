@@ -1,6 +1,6 @@
-import DataLine from "@/components/DataLine";
-import DataTable from "@/components/DataTable";
-import Gauge from "@/components/Gauge";
+import DataLine from "@/components/charts/DataLine";
+import Gauge from "@/components/charts/Gauge";
+import DataTable from "@/components/tables/DataTable";
 
 function DataOverview() {
   return (
