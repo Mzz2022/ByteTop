@@ -2,7 +2,7 @@ import ReactECharts from "echarts-for-react";
 
 import CustomContainer from "./variants/CustomContainer";
 
-function Gaugeview({className = ""}: {className?: string}) {
+export default function Gauge({ className = "" }: { className?: string }) {
   const option = {
     series: [
       {
@@ -74,5 +74,3 @@ function Gaugeview({className = ""}: {className?: string}) {
     </>
   );
 }
-
-export default Gaugeview;

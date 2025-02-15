@@ -3,11 +3,11 @@ import type { NavigateOptions } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 
 import Dashboard from "./pages/Dashboard";
-import Overview from "./pages/Overview";
-import Analytics from "./pages/Analytics";
 import NavBarLayout from "./layouts/NavBarLayout";
 import CrashAnalysis from "./pages/CrashAnalysis";
 import PerformanceAnalysis from "./pages/PerformanceAnalysis";
+import DataOverview from "./pages/DataOverview";
+import DataAnalytics from "./pages/DataAnalytics";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -21,8 +21,8 @@ function App() {
       <NavBarLayout>
         <div className="px-4 grid gap-3 grid-cols-12 mb-4">
           <Routes>
-            <Route element={<Overview />} path="/data/overview" />
-            <Route element={<Analytics />} path="/data/analytics" />
+            <Route element={<DataOverview />} path="/data/overview" />
+            <Route element={<DataAnalytics />} path="/data/analytics" />
             <Route element={<Dashboard />} path="/visitors/customer-type" />
             <Route element={<Dashboard />} path="/visitors/geography" />
             <Route element={<Dashboard />} path="/visitors/devices" />

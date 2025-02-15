@@ -37,7 +37,7 @@ const metricMap = metrics.reduce(
 
     return acc;
   },
-  {} as Record<MetricKey, string>,
+  {} as Record<MetricKey, string>
 );
 
 // 模拟数据
@@ -68,7 +68,7 @@ const useChartStore = create<ChartStore>((set) => ({
 // 根据选中指标和数据生成 ECharts 配置
 const generateChartOption = (
   selectedMetrics: MetricKey[],
-  data: TimeSeriesData,
+  data: TimeSeriesData
 ) => {
   // 根据是否包含 bounce_rate 动态设置 yAxis 配置
   const yAxis = selectedMetrics.includes("bounce_rate")
@@ -121,7 +121,7 @@ const generateChartOption = (
   };
 };
 
-export default function DataLineview({className}: {className: string}) {
+export default function DataLine({ className }: { className: string }) {
   // 从 Zustand store 获取状态与更新函数
   const { selectedMetrics, chartData, setSelectedMetrics, setChartData } =
     useChartStore();
@@ -129,7 +129,7 @@ export default function DataLineview({className}: {className: string}) {
   // 缓存图表配置，只有选中指标或数据变化时重新生成
   const chartOption = useMemo(
     () => generateChartOption(selectedMetrics, chartData),
-    [selectedMetrics, chartData],
+    [selectedMetrics, chartData]
   );
 
   // 模拟数据加载（实际可替换为 API 请求）
@@ -152,14 +152,14 @@ export default function DataLineview({className}: {className: string}) {
       const newSelection = Array.from(keys) as MetricKey[];
 
       setSelectedMetrics(
-        newSelection.length > 0 ? newSelection : [metrics[0].key],
+        newSelection.length > 0 ? newSelection : [metrics[0].key]
       );
     },
-    [setSelectedMetrics],
+    [setSelectedMetrics]
   );
 
   return (
-     <CustomContainer className={`${className}`}>
+    <CustomContainer className={`${className}`}>
       <h1>趋势分析</h1>
       <div className="p-4 h-full">
         <div className="mb-4 max-w-sm h-[10%]">

@@ -11,7 +11,7 @@ import {
 
 import CustomContainer from "@/components/variants/CustomContainer";
 
-export default function DataOverview({ className = ""}: { className?: string }) {
+export default function DataTable({ className = "" }: { className?: string }) {
   const rows = [
     {
       key: "3",
