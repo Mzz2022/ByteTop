@@ -19,7 +19,7 @@ function App() {
   return (
     <>
       <NavBarLayout>
-        <div className="px-4 grid gap-3 grid-cols-12 mb-4">
+        <main className="px-4 grid gap-3 grid-cols-12 mb-4">
           <Routes>
             <Route element={<DataOverview />} path="/data/overview" />
             <Route element={<DataAnalytics />} path="/data/analytics" />
@@ -34,7 +34,7 @@ function App() {
             />
             <Route element={<CrashAnalysis />} path="/performance/crash" />
           </Routes>
-        </div>
+        </main>
       </NavBarLayout>
     </>
   );

@@ -1,5 +1,9 @@
-import ReactECharts from "echarts-for-react";
+import DistributionPieChart from "@/components/charts/DistributionPieChart";
+import TrendChart from "@/components/charts/TrendChart";
+import CrashDistributionTable from "@/components/tables/CrashDistributionTable";
+import CrashStatsCards from "@/components/tables/CrashStatsCards";
 
+// 数据类型接口
 export interface CrashAnalysisData {
   crash_analysis: {
     [hour: string]: {
@@ -14,6 +18,20 @@ export interface CrashAnalysisData {
   };
 }
 
+export interface CrashDistributionItem {
+  version: string;
+  os: string;
+  device: string;
+  visitCount: number;
+  crashCount: number;
+  crashRate: number;
+  userCount: number;
+  crashUserCount: number;
+  crashUserRate: number;
+  crashShare: number;
+}
+
+// 模拟数据生成函数
 const generateMockData = (): CrashAnalysisData => {
   const hours = Array.from(
     { length: 24 },
@@ -47,7 +65,6 @@ const generateMockData = (): CrashAnalysisData => {
       );
       const crashRate = parseFloat((crashCount / 10000).toFixed(4));
 
-      // 生成设备分布
       const deviceDistribution = devices.reduce(
         (devAcc, device) => ({
           ...devAcc,
@@ -57,7 +74,6 @@ const generateMockData = (): CrashAnalysisData => {
         {}
       );
 
-      // 生成浏览器分布
       const browserDistribution = browsers.reduce(
         (browAcc, browser) => ({
           ...browAcc,
@@ -67,12 +83,10 @@ const generateMockData = (): CrashAnalysisData => {
         {}
       );
 
-      // 生成受影响页面
       const topPages = [...pages]
         .sort(() => 0.5 - Math.random())
         .slice(0, Math.floor(Math.random() * 3) + 2);
 
-      // 生成错误信息
       const errors = [...errorMessages]
         .sort(() => 0.5 - Math.random())
         .slice(0, Math.floor(Math.random() * 3) + 1);
@@ -93,23 +107,6 @@ const generateMockData = (): CrashAnalysisData => {
   };
 };
 
-const mockData = generateMockData();
-
-// 添加新的接口定义
-interface CrashDistributionItem {
-  version: string;
-  os: string;
-  device: string;
-  visitCount: number;
-  crashCount: number;
-  crashRate: number;
-  userCount: number;
-  crashUserCount: number;
-  crashUserRate: number;
-  crashShare: number;
-}
-
-// 生成模拟数据
 const generateMockDistributionData = (): CrashDistributionItem[] => {
   const versions = ["1.0.0", "1.0.1", "1.1.0", "1.1.1", "1.2.0"];
   const osTypes = ["iOS 16", "iOS 17", "Android 13", "Android 14"];
@@ -137,370 +134,31 @@ const generateMockDistributionData = (): CrashDistributionItem[] => {
       userCount,
       crashUserCount,
       crashUserRate: Number(((crashUserCount / userCount) * 100).toFixed(2)),
-      crashShare: Number(((crashCount / 1000) * 100).toFixed(2)), // 假设总崩溃数为1000
+      crashShare: Number(((crashCount / 1000) * 100).toFixed(2)),
     };
   });
 };
 
 const CrashAnalysis = () => {
-  // 获取当前小时的数据
+  const mockData = generateMockData();
   const currentHourData = mockData.crash_analysis["00:00"];
-
-  // 处理设备分布数据
-  const deviceData = Object.entries(
-    mockData.crash_analysis["00:00"].device_distribution || {}
-  );
+  const deviceData = Object.entries(currentHourData.device_distribution || {});
   const browserData = Object.entries(
-    mockData.crash_analysis["00:00"].browser_distribution || {}
+    currentHourData.browser_distribution || {}
   );
-
-  // 添加分布数据
   const distributionData = generateMockDistributionData();
 
   return (
-    <div className="w-full px-2 py-8 sm:px-0">
-      {/* 统计卡片 */}
-      <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
-        <h3 className="text-sm font-semibold text-gray-700 mb-4">流量概览</h3>
-        <div className="flex gap-4">
-          <div className="flex-1 flex flex-col">
-            <div className="text-sm text-gray-600">崩溃次数</div>
-            <div className="text-xl font-semibold text-gray-500">
-              {currentHourData.crash_count}
-            </div>
-          </div>
-          <div className="flex-1 flex flex-col">
-            <div className="text-sm text-gray-600">崩溃触发次数</div>
-            <div className="text-xl font-semibold text-gray-500">--</div>
-          </div>
-          <div className="flex-1 flex flex-col">
-            <div className="text-sm text-gray-600">崩溃率</div>
-            <div className="text-xl font-semibold text-gray-500">
-              {currentHourData.crash_rate
-                ? `${(currentHourData.crash_rate * 100).toFixed(2)}%`
-                : "--"}
-            </div>
-          </div>
-          <div className="flex-1 flex flex-col">
-            <div className="text-sm text-gray-600">访问用户数</div>
-            <div className="text-xl font-semibold text-gray-500">--</div>
-          </div>
-          <div className="flex-1 flex flex-col">
-            <div className="text-sm text-gray-600">崩溃触发用户数</div>
-            <div className="text-xl font-semibold text-gray-500">
-              {currentHourData.affected_users || "--"}
-            </div>
-          </div>
-          <div className="flex-1 flex flex-col">
-            <div className="text-sm text-gray-600">崩溃触发用户数占比</div>
-            <div className="text-xl font-semibold text-gray-500">--</div>
-          </div>
-        </div>
-      </div>
+    <div className="w-full px-2 py-8 sm:px-0 col-span-12">
+      <CrashStatsCards currentHourData={currentHourData} />
+      <TrendChart data={mockData} />
 
-      {/* 崩溃趋势图表 */}
-      <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
-        <ReactECharts
-          option={{
-            title: { text: "每小时崩溃趋势" },
-            tooltip: {
-              trigger: "axis",
-              formatter: function (
-                params: {
-                  name: string;
-                  value: number;
-                  axisDim: string;
-                  axisIndex: number;
-                  seriesIndex: number;
-                }[]
-              ) {
-                const data = mockData.crash_analysis[params[0].name];
-
-                return `
-                  <div class="font-sans">
-                    <div class="font-medium">${params[0].name}</div>
-                    <div>崩溃次数: ${data.crash_count}</div>
-                    <div>影响用户数: ${data.affected_users ?? "--"}</div>
-                    <div>崩溃率: ${data.crash_rate ? (data.crash_rate * 100).toFixed(2) : "--"}%</div>
-                  </div>
-                `;
-              },
-            },
-            xAxis: {
-              type: "category",
-              data: Object.keys(mockData.crash_analysis),
-            },
-            yAxis: { type: "value" },
-            series: [
-              {
-                data: Object.values(mockData.crash_analysis).map(
-                  (v) => v.crash_count
-                ),
-                type: "line",
-                smooth: true,
-              },
-            ],
-          }}
-          style={{ height: 400 }}
-        />
-      </div>
-
-      {/* 饼图容器 */}
       <div className="flex gap-4 mb-6">
-        <div className="flex-1 bg-white rounded-lg shadow-lg p-4">
-          <ReactECharts
-            option={{
-              title: { text: "设备分布" },
-              tooltip: { trigger: "item" },
-              series: [
-                {
-                  type: "pie",
-                  radius: "45%",
-                  data: deviceData.map(([name, value]) => ({ value, name })),
-                },
-              ],
-            }}
-            style={{ height: "300px" }}
-          />
-        </div>
-        <div className="flex-1 bg-white rounded-lg shadow-lg p-4">
-          <ReactECharts
-            option={{
-              title: { text: "浏览器分布" },
-              tooltip: { trigger: "item" },
-              series: [
-                {
-                  type: "pie",
-                  radius: "45%",
-                  data: browserData.map(([name, value]) => ({ value, name })),
-                },
-              ],
-            }}
-            style={{ height: "300px" }}
-          />
-        </div>
+        <DistributionPieChart title="设备分布" data={deviceData} />
+        <DistributionPieChart title="浏览器分布" data={browserData} />
       </div>
 
-      {/* 错误信息卡片 */}
-      {/* <div className="col-span-full bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-        <h3 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">
-          错误信息汇总
-        </h3>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  序号
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  错误信息
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  状态
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {mockData.crash_analysis["00:00"].error_messages?.map(
-                (msg, i) => (
-                  <tr key={i} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {i + 1}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <svg
-                          className="w-5 h-5 text-red-500 mr-3 shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                          />
-                        </svg>
-                        <span className="text-sm font-medium text-gray-900">
-                          {msg}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                        活跃
-                      </span>
-                    </td>
-                  </tr>
-                )
-              ) ?? (
-                <tr>
-                  <td
-                    colSpan={3}
-                    className="px-6 py-4 text-center text-gray-400 text-sm"
-                  >
-                    当前时段无错误信息
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div> */}
-
-      {/* 更新崩溃分布表格 */}
-      <div className="bg-white rounded-lg shadow-lg p-4">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-sm font-semibold text-gray-700">崩溃分布</h3>
-          <div className="flex gap-4">
-            <input
-              type="search"
-              placeholder="请输入应用版本"
-              className="px-3 py-1 border border-gray-200 rounded-lg text-sm"
-            />
-            <select className="px-3 py-1 border border-gray-200 rounded-lg text-sm">
-              <option value="">操作系统：全部</option>
-              <option value="ios">iOS</option>
-              <option value="android">Android</option>
-            </select>
-          </div>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  序号
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  应用版本
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  操作系统
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  设备型号
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  访问次数
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  崩溃次数
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  崩溃率
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  访问用户数
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  崩溃触发用户数
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  崩溃触发用户占比
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  崩溃数占比
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {distributionData.length > 0 ? (
-                distributionData.map((item, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {index + 1}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.version}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.os}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.device}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.visitCount}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.crashCount}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.crashRate}%
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.userCount}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.crashUserCount}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.crashUserRate}%
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.crashShare}%
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={11}
-                    className="px-6 py-4 text-center text-gray-400 text-sm"
-                  >
-                    暂无数据
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <CrashDistributionTable data={distributionData} />
     </div>
   );
 };

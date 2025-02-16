@@ -79,7 +79,9 @@ export const PerformanceChart = ({
             selectedKeys={new Set(selectedMetrics)}
             selectionMode="multiple"
             size="sm"
-            onSelectionChange={(keys) => onMetricChange(new Set(keys))}
+            onSelectionChange={(keys) =>
+              onMetricChange(new Set(keys) as Set<string>)
+            }
           >
             {metricOptions.map((metric) => (
               <SelectItem key={metric.id}>{metric.name}</SelectItem>
