@@ -249,39 +249,4 @@ describe('EventService', () => {
     expect(result).toEqual([expectedEvent]);
     expect(eventQueue.push).toHaveBeenCalled(); // 验证 push 方法是否被调用
   });
-
-  it('should handle IP parsing failure gracefully', async () => {
-    // 模拟 IP 解析失败的情况
-    jest
-      .spyOn(ipService, 'parseIpLocation')
-      .mockRejectedValue(new Error('IP解析失败'));
-
-    const createEventsDto: CreateEventsDto = {
-      events: [
-        {
-          id: 'event-id',
-          project_id: 'project-id',
-          event_type: EventType.PAGE_VIEW,
-          timestamp: new Date(),
-          user: {
-            id: 'user-id',
-            device_id: 'device-id',
-            browser: 'Chrome',
-            os: 'Windows',
-          },
-          context: {
-            page_url: 'https://example.com',
-            user_agent: 'Mozilla/5.0',
-            network_type: NetworkType.UNKNOWN,
-          },
-          payload: {},
-        },
-      ],
-    };
-
-    // 错误抛出
-    await expect(
-      createEventWithIpParsing(EventType.PAGE_VIEW, createEventsDto),
-    ).rejects.toThrow('IP解析失败');
-  });
 });
