@@ -160,30 +160,32 @@ export default function DataLine({ className }: { className: string }) {
 
   return (
     <CustomContainer className={`${className}`}>
-      <h1>趋势分析</h1>
-      <div className="p-4 h-full">
-        <div className="mb-4 max-w-sm h-[10%]">
-          <Select
-            label="查询指标"
-            labelPlacement="outside"
-            placeholder="请选择指标"
-            selectedKeys={new Set(selectedMetrics)}
-            selectionMode="multiple"
-            size="sm"
-            onSelectionChange={handleSelectionChange}
-          >
-            {metrics.map((metric) => (
-              <SelectItem key={metric.key}>{metric.label}</SelectItem>
-            ))}
-          </Select>
-        </div>
-        <div className="h-full">
-          <ReactECharts
-            notMerge={true}
-            option={chartOption}
-            opts={{ renderer: "svg" }}
-            style={{ height: "75%" }}
-          />
+      <div className="h-96 w-full">
+        <h1>趋势分析</h1>
+        <div className="p-4 h-full">
+          <div className="mb-4 max-w-sm h-[10%]">
+            <Select
+              label="查询指标"
+              labelPlacement="outside"
+              placeholder="请选择指标"
+              selectedKeys={new Set(selectedMetrics)}
+              selectionMode="multiple"
+              size="sm"
+              onSelectionChange={handleSelectionChange}
+            >
+              {metrics.map((metric) => (
+                <SelectItem key={metric.key}>{metric.label}</SelectItem>
+              ))}
+            </Select>
+          </div>
+          <div className="h-full">
+            <ReactECharts
+              notMerge={true}
+              option={chartOption}
+              opts={{ renderer: "svg" }}
+              style={{ height: "75%" }}
+            />
+          </div>
         </div>
       </div>
     </CustomContainer>

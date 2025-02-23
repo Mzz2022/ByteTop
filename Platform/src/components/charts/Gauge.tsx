@@ -64,11 +64,13 @@ export default function Gauge({ className = "" }: { className?: string }) {
   return (
     <>
       <CustomContainer className={`${className}`}>
-        <h1>UV</h1>
-        <ReactECharts
-          option={option}
-          style={{ height: "100%", width: "100%" }}
-        />
+        <div className="h-96 w-full">
+          <h1>UV</h1>
+          <ReactECharts
+            option={option}
+            style={{ height: "100%", width: "100%" }}
+          />
+        </div>
       </CustomContainer>
     </>
   );
