@@ -1,10 +1,8 @@
-import { Module } from "@nestjs/common"
-import { UserBehaviorModule } from "./modules/userBehavior/userBehavior.module.js"
-import { ErrorModule } from "./modules/error/error.module.js"
-import { PerformanceModule } from "./modules/performance/performance.module.js"
-import { cacheModule } from "./config/cache.config"
+import { Module } from '@nestjs/common';
+import { cacheModule } from './config/cache.config';
+import { EventModule } from './modules/event/event.module.js';
 
 @Module({
-	imports: [UserBehaviorModule, ErrorModule, PerformanceModule, cacheModule],
+  imports: [cacheModule, EventModule],
 })
 export class AppModule {}

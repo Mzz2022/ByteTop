@@ -1,0 +1,28 @@
+enum UserRole {
+  USER      // 普通用户
+  ADMIN     // 管理员
+}
+
+model EventUser {
+  id        String   @id @default(uuid())   // 用户唯一标识符
+  ip        String                          // 用户IP地址
+  device_id  String?                        // 设备ID（可选）
+  browser   String?                         // 浏览器类型（可选）
+  os        String?                         // 操作系统（可选）
+
+  events    Event[]                         // 关联的事件列表
+  location  Location @relation(fields: [ip], references: [ip])  // 关联的位置信息
+}
+
+model PlatformUser {
+  id           String    @id @default(uuid())   // 用户唯一标识符
+  username     String    @unique                // 用户名
+  email        String?   @unique                // 用户电子邮件
+  password_hash String?                         // 密码哈希
+  created_at    DateTime  @default(now())       // 用户创建时间
+  last_login    DateTime?                       // 用户最后登录时间
+
+  role         UserRole  @default(USER)         // 用户角色，默认为普通用户
+
+  projects     Project[]                        // 用户管理的项目列表
+}

@@ -1,0 +1,11 @@
+model Project {
+  id                 String @id @default(uuid())    // 项目唯一ID
+  name               String                         // 项目名称
+  description        String?                        // 项目描述（可选）
+  
+  events             Event[]                        // 关联的事件
+  pages              PageStatistics[]               // 关联的页面统计
+  errors             ErrorStatistics[]              // 关联的错误统计
+  performances       PerformanceStatistics[]        // 关联的性能统计
+  user               PlatformUser[]                 // 项目拥有者
+}

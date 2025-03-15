@@ -1,0 +1,49 @@
+
+model PageStatistics {
+  id            String   @id @default(uuid()) // 唯一标识
+  project_id    String   // 项目ID
+  page_url      String   // 页面URL
+  pv_count      Int      @default(0)  // 页面浏览量
+  uv_count      Int      @default(0)  // 独立访客数
+  error_count   Int      @default(0)  // 错误发生次数
+  performance   Json     // 页面性能数据（LCP、FCP等）
+
+  project       Project  @relation(fields: [project_id], references: [id])
+
+  @@index([project_id])
+  @@index([page_url])
+}
+
+model ErrorStatistics {
+  id          String   @id @default(uuid()) // 唯一标识
+  project_id  String   // 项目ID
+  page_url    String   // 页面URL
+  error_type  String   // 错误类型（如 TypeError）
+  message     String   // 错误消息
+  stack       String   // 错误堆栈（截断至前2000字符）
+  user_count  Int      @default(0)  // 影响的用户数
+  occurrence  Int      @default(0)  // 错误发生次数
+
+  project     Project  @relation(fields: [project_id], references: [id])
+
+  @@index([project_id])
+  @@index([page_url])
+  @@index([error_type])
+}
+
+model PerformanceStatistics {
+  id            String   @id @default(uuid()) // 唯一标识
+  project_id    String   // 项目ID
+  page_url      String   // 页面URL
+  metric_type   String   // 性能指标类型（LCP、FCP、FID等）
+  average_value Float    // 指标的平均值
+  max_value     Float    // 指标的最大值
+  min_value     Float    // 指标的最小值
+  occurrence    Int      @default(0)  // 性能数据发生次数
+
+  project       Project  @relation(fields: [project_id], references: [id])
+  
+  @@index([project_id])
+  @@index([page_url])
+  @@index([metric_type])
+}

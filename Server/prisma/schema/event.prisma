@@ -1,0 +1,44 @@
+enum EventType {
+  PAGE_VIEW      // 页面访问事件
+  PERFORMANCE    // 性能指标事件
+  JS_ERROR       // JavaScript 错误事件
+  CUSTOM         // 自定义行为事件
+}
+
+enum NetworkType {
+  UNKNOWN        // 未知网络类型
+  CELLULAR_3G    // 3G 网络
+  CELLULAR_4G    // 4G 网络
+  WIFI           // WIFI 网络
+}
+
+model Event {
+  id          String     @id @default(uuid())  // 事件唯一标识符
+  project_id  String                           // 项目ID
+  event_type  EventType                        // 事件类型，限定为枚举值
+  timestamp   DateTime                         // 事件发生时间
+  user_id     String                           // 用户ID
+  context_id  String                           // 上下文ID
+  payload     Json                             // 事件详细数据
+
+  user        EventUser  @relation(fields: [user_id], references: [id])     // 关联的用户
+  context     Context    @relation(fields: [context_id], references: [id])  // 关联的上下文
+  project     Project    @relation(fields: [project_id], references: [id])  // 关联的项目
+
+  @@index([timestamp])                         // 时间戳索引，优化时间范围查询
+  @@index([event_type])                        // 事件类型索引
+  @@index([user_id])                           // 用户ID索引
+}                      
+
+model Context {
+  id                 String @id @default(uuid())    // 上下文唯一标识符
+  page_url           String                         // 页面URL
+  referrer           String?                        // 引荐来源
+  screen_resolution  String?                        // 屏幕分辨率
+  network_type       NetworkType?                   // 网络类型
+  user_agent         String                         // 用户代理
+
+  events             Event[]                        // 关联的事件列表
+
+  @@index([page_url])                               // 页面URL索引
+}
