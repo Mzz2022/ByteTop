@@ -3,7 +3,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
   DropdownItem,
   DropdownMenu,
@@ -21,7 +20,7 @@ import {
   FaChartLine,
   FaExclamationTriangle,
 } from "react-icons/fa";
-import { Link as RouterLink } from "react-router-dom";
+import { ThemeSwitch } from "@/components/ThemeSwitch"; // 导入主题切换组件
 
 interface ChevronDownProps {
   fill?: string;
@@ -103,18 +102,20 @@ export const Scale = ({
 
 const NavigationBar = () => {
   return (
-    <Navbar>
+    <Navbar className="bg-white shadow-md">
+      {" "}
+      {/* 设置背景为白色并添加阴影 */}
       <NavbarBrand>
-        <p className="font-bold text-inherit">Platform</p>
+        <p className="font-bold text-inherit text-gray-800">Platform</p>{" "}
+        {/* 深色文字 */}
       </NavbarBrand>
-
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <Dropdown>
           <NavbarItem>
             <DropdownTrigger>
               <Button
                 disableRipple
-                className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                className="p-0 bg-transparent data-[hover=true]:bg-transparent text-gray-800"
                 endContent={<ChevronDown fill="currentColor" size={16} />}
                 radius="sm"
                 variant="light"
@@ -135,17 +136,17 @@ const NavigationBar = () => {
               description="查看整体数据趋势和关键指标"
               href="/data/overview"
               startContent={
-                <FaChartBar style={{ color: "#FFD700" }} size={30} />
+                <FaChartBar size={30} style={{ color: "#FFD700" }} />
               }
             >
               数据总揽
             </DropdownItem>
             <DropdownItem
               key="data_analytics"
-              href="/data/analytics"
               description="深入分析数据维度和用户行为"
+              href="/data/analytics"
               startContent={
-                <FaUserFriends style={{ color: "#FF69B4" }} size={30} />
+                <FaUserFriends size={30} style={{ color: "#FF69B4" }} />
               }
             >
               数据概览
@@ -158,7 +159,7 @@ const NavigationBar = () => {
             <DropdownTrigger>
               <Button
                 disableRipple
-                className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                className="p-0 bg-transparent data-[hover=true]:bg-transparent text-gray-800"
                 endContent={<ChevronDown fill="currentColor" size={16} />}
                 radius="sm"
                 variant="light"
@@ -176,30 +177,30 @@ const NavigationBar = () => {
           >
             <DropdownItem
               key="visitor_customer_type"
-              href="/visitors/customer-type"
               description="分析新客户与回头客的比例及行为差异"
+              href="/visitors/customer-type"
               startContent={
-                <FaUserFriends style={{ color: "#FF4500" }} size={30} />
+                <FaUserFriends size={30} style={{ color: "#FF4500" }} />
               }
             >
               新老顾客
             </DropdownItem>
             <DropdownItem
               key="visitor_geography"
-              href="/visitors/geography"
               description="查看用户地域分布及区域特征"
+              href="/visitors/geography"
               startContent={
-                <FaMapMarkedAlt style={{ color: "#32CD32" }} size={30} />
+                <FaMapMarkedAlt size={30} style={{ color: "#32CD32" }} />
               }
             >
               地域分析
             </DropdownItem>
             <DropdownItem
               key="visitor_devices"
-              href="/visitors/devices"
               description="统计不同设备类型的访问情况"
+              href="/visitors/devices"
               startContent={
-                <FaMobileAlt style={{ color: "#1E90FF" }} size={30} />
+                <FaMobileAlt size={30} style={{ color: "#1E90FF" }} />
               }
             >
               设备分析
@@ -212,7 +213,7 @@ const NavigationBar = () => {
             <DropdownTrigger>
               <Button
                 disableRipple
-                className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                className="p-0 bg-transparent data-[hover=true]:bg-transparent text-gray-800"
                 endContent={<ChevronDown fill="currentColor" size={16} />}
                 radius="sm"
                 variant="light"
@@ -233,16 +234,16 @@ const NavigationBar = () => {
               description="查看用户画像及特征分析"
               href="/users/image"
               startContent={
-                <FaUserCircle style={{ color: "#8A2BE2" }} size={30} />
+                <FaUserCircle size={30} style={{ color: "#8A2BE2" }} />
               }
             >
               用户画像
             </DropdownItem>
             <DropdownItem
               key="user_loyalty"
-              href="/users/loyalty"
               description="分析用户留存率和忠诚度指标"
-              startContent={<FaHeart style={{ color: "#DC143C" }} size={30} />}
+              href="/users/loyalty"
+              startContent={<FaHeart size={30} style={{ color: "#DC143C" }} />}
             >
               忠诚度分析
             </DropdownItem>
@@ -254,7 +255,7 @@ const NavigationBar = () => {
             <DropdownTrigger>
               <Button
                 disableRipple
-                className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                className="p-0 bg-transparent data-[hover=true]:bg-transparent text-gray-800"
                 endContent={<ChevronDown fill="currentColor" size={16} />}
                 radius="sm"
                 variant="light"
@@ -275,7 +276,7 @@ const NavigationBar = () => {
               description="监测页面加载速度与性能指标"
               href="/performance/analysis"
               startContent={
-                <FaChartLine style={{ color: "#4169E1" }} size={30} />
+                <FaChartLine size={30} style={{ color: "#4169E1" }} />
               }
             >
               性能分析
@@ -285,7 +286,7 @@ const NavigationBar = () => {
               description="追踪页面异常与崩溃情况统计"
               href="/performance/crash"
               startContent={
-                <FaExclamationTriangle style={{ color: "#FF4500" }} size={30} />
+                <FaExclamationTriangle size={30} style={{ color: "#FF4500" }} />
               }
             >
               页面崩溃分析
@@ -293,40 +294,42 @@ const NavigationBar = () => {
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
-
       <NavbarContent as="div" justify="end">
-        <Dropdown placement="bottom-end">
-          <DropdownTrigger>
-            <Avatar
-              isBordered
-              as="button"
-              className="transition-transform"
-              color="secondary"
-              name="Jason Hughes"
-              size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-            />
-          </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile_info" className="h-14 gap-2">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
-            </DropdownItem>
-            <DropdownItem key="profile_settings">My Settings</DropdownItem>
-            <DropdownItem key="profile_team_settings">
-              Team Settings
-            </DropdownItem>
-            <DropdownItem key="profile_analytics">Analytics</DropdownItem>
-            <DropdownItem key="profile_system">System</DropdownItem>
-            <DropdownItem key="profile_configurations">
-              Configurations
-            </DropdownItem>
-            <DropdownItem key="profile_help">Help & Feedback</DropdownItem>
-            <DropdownItem key="profile_logout" color="danger">
-              Log Out
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+        <NavbarItem>
+          <Dropdown>
+            <DropdownTrigger>
+              <Avatar
+                isBordered
+                as="button"
+                className="transition-transform"
+                color="secondary"
+                size="sm"
+              />
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Profile Actions" variant="flat">
+              <DropdownItem key="profile_info">
+                <p className="font-semibold">访客登录</p>
+              </DropdownItem>
+              {/* <DropdownItem key="profile_settings">My Settings</DropdownItem>
+              <DropdownItem key="profile_team_settings">
+                Team Settings
+              </DropdownItem>
+              <DropdownItem key="profile_analytics">Analytics</DropdownItem>
+              <DropdownItem key="profile_system">System</DropdownItem>
+              <DropdownItem key="profile_configurations">
+                Configurations
+              </DropdownItem>
+              <DropdownItem key="profile_help">Help & Feedback</DropdownItem> */}
+              <DropdownItem key="profile_logout" color="danger">
+                <p className="font-semibold">Log In</p>
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </NavbarItem>
+
+        <NavbarItem>
+          <ThemeSwitch />
+        </NavbarItem>
       </NavbarContent>
     </Navbar>
   );

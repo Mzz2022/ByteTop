@@ -1,6 +1,8 @@
-import * as React from "react";
+import { SVGProps } from "react";
 
-import { IconSvgProps } from "@/types";
+export type IconSvgProps = SVGProps<SVGSVGElement> & {
+  size?: number;
+};
 
 export const Logo: React.FC<IconSvgProps> = ({
   size = 36,
@@ -184,3 +186,61 @@ export const SearchIcon = (props: IconSvgProps) => (
     />
   </svg>
 );
+
+export const EyeIcon = (props: IconSvgProps) => {
+  return (
+    <svg
+      aria-hidden="true"
+      fill="none"
+      focusable="false"
+      height="1em"
+      role="presentation"
+      viewBox="0 0 20 20"
+      width="1em"
+      {...props}
+    >
+      <path
+        d="M12.9833 10C12.9833 11.65 11.65 12.9833 10 12.9833C8.35 12.9833 7.01666 11.65 7.01666 10C7.01666 8.35 8.35 7.01666 10 7.01666C11.65 7.01666 12.9833 8.35 12.9833 10Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+      />
+      <path
+        d="M9.99999 16.8916C12.9417 16.8916 15.6833 15.1583 17.5917 12.1583C18.3417 10.9833 18.3417 9.00831 17.5917 7.83331C15.6833 4.83331 12.9417 3.09998 9.99999 3.09998C7.05833 3.09998 4.31666 4.83331 2.40833 7.83331C1.65833 9.00831 1.65833 10.9833 2.40833 12.1583C4.31666 15.1583 7.05833 16.8916 9.99999 16.8916Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+      />
+    </svg>
+  );
+};
+
+export const InfoIcon = (props: IconSvgProps) => {
+  return (
+    <svg
+      fill="none"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M12 17.75C12.4142 17.75 12.75 17.4142 12.75 17V11C12.75 10.5858 12.4142 10.25 12 10.25C11.5858 10.25 11.25 10.5858 11.25 11V17C11.25 17.4142 11.5858 17.75 12 17.75Z"
+        fill="#1C274C"
+      />
+      <path
+        d="M12 7C12.5523 7 13 7.44772 13 8C13 8.55228 12.5523 9 12 9C11.4477 9 11 8.55228 11 8C11 7.44772 11.4477 7 12 7Z"
+        fill="#1C274C"
+      />
+      <path
+        clipRule="evenodd"
+        d="M1.25 12C1.25 6.06294 6.06294 1.25 12 1.25C17.9371 1.25 22.75 6.06294 22.75 12C22.75 17.9371 17.9371 22.75 12 22.75C6.06294 22.75 1.25 17.9371 1.25 12ZM12 2.75C6.89137 2.75 2.75 6.89137 2.75 12C2.75 17.1086 6.89137 21.25 12 21.25C17.1086 21.25 21.25 17.1086 21.25 12C21.25 6.89137 17.1086 2.75 12 2.75Z"
+        fill="#1C274C"
+        fillRule="evenodd"
+      />
+    </svg>
+  );
+};

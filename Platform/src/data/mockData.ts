@@ -1,0 +1,42 @@
+export const mockData = {
+  code: 200,
+  message: "success",
+  data: {
+    current: {
+      page_views: 18432,
+      visits: 1280,
+      visitors: 995,
+      ip_count: 920,
+      average_page_views: 14,
+      average_duration: "00:06:15",
+      bounce_rate: "8.12%",
+    },
+    previous: {
+      page_views: 38542,
+      visits: 2750,
+      visitors: 2350,
+      ip_count: 2201,
+      average_page_views: 16,
+      average_duration: "00:05:45",
+      bounce_rate: "9.85%",
+    },
+    comparison: {
+      page_views_change: "-52.18%",
+      visits_change: "-53.45%",
+      visitors_change: "-57.66%",
+      ip_count_change: "-58.20%",
+      average_page_views_change: "-12.50%",
+      average_duration_change: "+8.70%",
+      bounce_rate_change: "-17.56%",
+    },
+    year_comparison: {
+      page_views_change: "--",
+      visits_change: "--",
+      visitors_change: "--",
+      ip_count_change: "--",
+      average_page_views_change: "--",
+      average_duration_change: "--",
+      bounce_rate_change: "--",
+    },
+  },
+};

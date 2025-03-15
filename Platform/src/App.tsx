@@ -1,10 +1,13 @@
-import React from "react";
 import type { NavigateOptions } from "react-router-dom";
 
-import { useNavigate, useHref, Routes, Route } from "react-router-dom";
-import { HeroUIProvider } from "@heroui/react";
+import { Routes, Route } from "react-router-dom";
+
 import Dashboard from "./pages/Dashboard";
-import NavigationBar from "./components/navbar";
+import NavBarLayout from "./layouts/NavBarLayout";
+import CrashAnalysis from "./pages/CrashAnalysis";
+import PerformanceAnalysis from "./pages/PerformanceAnalysis";
+import DataOverview from "./pages/DataOverview";
+import DataAnalytics from "./pages/DataAnalytics";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -13,29 +16,25 @@ declare module "@react-types/shared" {
 }
 
 function App() {
-  const navigate = useNavigate();
-
   return (
-    <HeroUIProvider navigate={navigate} useHref={useHref}>
-      <div className="flex flex-col h-screen">
-        <div className="fixed top-0 w-full z-50">
-          <NavigationBar />
-        </div>
-        <main className="flex-1 mt-16 px-6">
-          <Routes>
-            <Route path="/data/overview" element={<Dashboard />} />
-            <Route path="/data/analytics" element={<Dashboard />} />
-            <Route path="/visitors/customer-type" element={<Dashboard />} />
-            <Route path="/visitors/geography" element={<Dashboard />} />
-            <Route path="/visitors/devices" element={<Dashboard />} />
-            <Route path="/users/image" element={<Dashboard />} />
-            <Route path="/users/loyalty" element={<Dashboard />} />
-            <Route path="/performance/analysis" element={<Dashboard />} />
-            <Route path="/performance/crash" element={<Dashboard />} />
-          </Routes>
-        </main>
-      </div>
-    </HeroUIProvider>
+    <>
+      <NavBarLayout>
+        <Routes>
+          <Route element={<DataOverview />} path="/data/overview" />
+          <Route element={<DataAnalytics />} path="/data/analytics" />
+          <Route element={<Dashboard />} path="/visitors/customer-type" />
+          <Route element={<Dashboard />} path="/visitors/geography" />
+          <Route element={<Dashboard />} path="/visitors/devices" />
+          <Route element={<Dashboard />} path="/users/image" />
+          <Route element={<Dashboard />} path="/users/loyalty" />
+          <Route
+            element={<PerformanceAnalysis />}
+            path="/performance/analysis"
+          />
+          <Route element={<CrashAnalysis />} path="/performance/crash" />
+        </Routes>
+      </NavBarLayout>
+    </>
   );
 }
 

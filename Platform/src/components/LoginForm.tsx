@@ -1,71 +1,146 @@
-import { Form } from "@heroui/form";
-import { Input } from "@heroui/input";
-import { Button } from "@heroui/button";
+import React from "react";
+import { Tabs, Tab, Input, Link, Button, Card, CardBody } from "@heroui/react";
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface LoginFormData {
-  email: string;
+  username: string;
   password: string;
 }
 
 const initialFormData: LoginFormData = {
-  email: "",
+  username: "",
   password: "",
 };
 
 export default function LoginForm() {
   const [formData, setFormData] = useState<LoginFormData>(initialFormData);
+  const [errors, setErrors] = useState<Partial<LoginFormData>>({});
   const navigate = useNavigate();
+
+  const validateForm = () => {
+    const newErrors: Partial<LoginFormData> = {};
+
+    if (!formData.username) {
+      newErrors.username = "用户名不能为空";
+    } else if (formData.username.length < 3) {
+      newErrors.username = "用户名长度至少3个字符";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "密码不能为空";
+    }
+    // else if (formData.password.length < 6) {
+    //   newErrors.password = "密码长度至少6个字符";
+    // }
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 假设登录成功后跳转到首页
-    navigate("/dashboard");
+    if (validateForm()) {
+      // 假设登录成功后跳转到首页
+      if (formData.username === "admin" && formData.password === "admin") {
+        navigate("/dashboard");
+      } else {
+        setErrors({
+          password: "用户名或密码错误",
+          username: "用户名或密码错误",
+        });
+      }
+    }
   };
 
+  const handleInputChange =
+    (field: keyof LoginFormData) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData({ ...formData, [field]: e.target.value });
+      // 清除对应字段的错误信息
+      if (errors[field]) {
+        setErrors({ ...errors, [field]: undefined });
+      }
+    };
+
+  const [selected, setSelected] = React.useState<React.Key>("login");
+
   return (
-    <Form
-      className="h-full w-full max-w-xs flex flex-col gap-4"
-      validationBehavior="native"
-      onSubmit={handleSubmit}
-    >
-      <Input
-        isRequired
-        errorMessage="请输入有效的邮箱"
-        label="Email"
-        labelPlacement="outside"
-        name="email"
-        placeholder="请输入邮箱"
-        type="text"
-        value={formData.email}
-        onChange={(e) =>
-          setFormData((prev) => ({ ...prev, email: e.target.value }))
-        }
-      />
-
-      <Input
-        isRequired
-        errorMessage="请输入有效的密码"
-        label="password"
-        labelPlacement="outside"
-        name="password"
-        placeholder="请输入密码"
-        type="password"
-        value={formData.password}
-        onChange={(e) =>
-          setFormData((prev) => ({ ...prev, password: e.target.value }))
-        }
-      />
-
-      <div className="flex gap-2">
-        <Button color="primary" type="submit">
-          登录
-        </Button>
-        <Button color="secondary" type="button" disabled>
-          注册
-        </Button>
-      </div>
-    </Form>
+    <div className="flex flex-col w-full">
+      <Card className="max-w-full w-[340px] h-full pb-1">
+        <CardBody className="overflow-hidden">
+          <Tabs
+            fullWidth
+            aria-label="Tabs form"
+            selectedKey={selected as any}
+            size="md"
+            onSelectionChange={setSelected}
+          >
+            <Tab key="login" title="登录">
+              <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                <Input
+                  isRequired
+                  errorMessage={errors.username}
+                  isInvalid={!!errors.username}
+                  label="用户名"
+                  placeholder="请输入用户名"
+                  type="text"
+                  value={formData.username}
+                  onChange={handleInputChange("username")}
+                />
+                <Input
+                  isRequired
+                  errorMessage={errors.password}
+                  isInvalid={!!errors.password}
+                  label="密码"
+                  placeholder="请输入密码"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleInputChange("password")}
+                />
+                <div className="flex gap-2 justify-end mt-2">
+                  <Button fullWidth color="primary" type="submit">
+                    Login
+                  </Button>
+                </div>
+              </form>
+            </Tab>
+            <Tab key="sign-up" isDisabled title="注册">
+              <form className="flex flex-col gap-4 h-[300px]">
+                <Input
+                  isRequired
+                  label="Name"
+                  placeholder="Enter your name"
+                  type="password"
+                />
+                <Input
+                  isRequired
+                  label="username"
+                  placeholder="Enter your username"
+                  type="username"
+                />
+                <Input
+                  isRequired
+                  label="Password"
+                  placeholder="Enter your password"
+                  type="password"
+                />
+                <p className="text-center text-small">
+                  Already have an account?{" "}
+                  <Link size="sm" onPress={() => setSelected("login")}>
+                    Login
+                  </Link>
+                </p>
+                <div className="flex gap-2 justify-end">
+                  <Button fullWidth color="primary">
+                    Sign up
+                  </Button>
+                </div>
+              </form>
+            </Tab>
+          </Tabs>
+        </CardBody>
+      </Card>
+    </div>
   );
 }
