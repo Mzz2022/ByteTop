@@ -11,9 +11,24 @@
 
 ```
 ByteTop/
-  ├── Docs/     官方文档
-  ├── Platform/ 数据平台
-  ├── Server/   数据服务
-  ├── Tracing/  埋点SDK
-  └── README.md
+  ├── Docs/      官方文档
+  ├── Platform/  数据平台
+  ├── Server/    数据服务
+  ├── Tracing/   埋点SDK
+  ├── package.json
+  ├── pnpm-workspace.yaml
+  ├── biome.json   // 代码格式化工具， eslint和prettier的上位替代
+  └── .changeset/
 ```
+
+## 3. 运行命令
+
+统一使用node版本：lts/hydrogen （node版本：18.20.5）
+
+在根目录下：
+```sh
+pnpm run dev:docs  # 启动文档
+pnpm run dev:platform  # 启动数据平台
+```
+
+在各自文件夹下，直接按照各自的package.json中的scripts运行；
