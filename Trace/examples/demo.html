@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监控SDK综合演示</title>
+    <script src="../dist/myMonitor.js"></script>
+    <style>
+        .demo-section {
+            margin: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            margin: 5px;
+            padding: 8px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        </style>
+</head>
+<body>
+    <!-- 需要追踪曝光的元素 -->
+    <div data-exposure="banner">广告位</div>
+    <div class="demo-section">
+        <h3>JS错误监控</h3>
+        <button onclick="throwError()">抛出JS错误</button>
+    </div>
+
+    <div class="demo-section">
+        <h3>Promise错误</h3>
+        <button onclick="throwPromiseError()">抛出Promise错误</button>
+    </div>
+
+    <div class="demo-section">
+        <h3>长任务演示</h3>
+        <button onclick="runLongTask()">执行200ms长任务</button>
+    </div>
+
+    <div class="demo-section">
+        <h3>资源加载错误</h3>
+        <button onclick="loadErrorResource()">加载错误资源</button>
+    </div>
+
+    <div class="demo-section">
+        <h3>API请求监控</h3>
+        <button onclick="requestNormalAPI()">请求正常API</button>
+        <button onclick="requestErrorAPI()">请求错误API</button>
+    </div>
+
+    <div class="demo-section">
+        <h3>白屏检测</h3>
+        <button onclick="simulateWhiteScreen()">模拟白屏</button>
+        <div id="mainContent" style="height: 100px; background: #f0f0f0; margin: 10px 0;">
+            页面主要内容区域
+        </div>
+    </div>
+    <div data-exposure="banner2">广告位2</div>
+
+    <script>
+        // JS错误示例
+        function throwError() {
+            window.undefinedVar.error = 'error';
+        }
+
+        // Promise错误示例
+        function throwPromiseError() {
+            new Promise((_, reject) => reject('模拟Promise错误'));
+        }
+
+        // 长任务示例
+        function runLongTask() {
+            const start = Date.now();
+            while (Date.now() < start + 200) {}
+        }
+
+        // 资源加载错误示例
+        function loadErrorResource() {
+            const script = document.createElement('script');
+            script.src = '/non-existent.js';
+            document.body.appendChild(script);
+        }
+
+        // API请求示例
+        function requestNormalAPI() {
+            fetch('http://localhost:8080/');
+        }
+
+        function requestErrorAPI() {
+            fetch('http://localhost:8080/error');
+        }
+
+        // 白屏模拟
+        function simulateWhiteScreen() {
+            const content = document.getElementById('mainContent');
+            if (content) content.style.display = 'none';
+        }
+    </script>
+
+</html>

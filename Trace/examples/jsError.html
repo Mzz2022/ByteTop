@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>前端监控 SDK.</title>
+    <script src="../dist/myMonitor.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <input type="button" value="点击抛出错误" onclick="errorClick()" />
+    </div>
+
+    <script>
+      function errorClick() {
+        // 模拟代码错误：访问一个未定义的对象的属性
+        window.someVal.error = "error";
+      }
+    </script>
+  </body>
+</html>

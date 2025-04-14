@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>request API Error.</title>
+    <script src="../dist/myMonitor.js"></script>
+  </head>
+  <body>
+    <script>
+      window.onload = () => {
+        setTimeout(() => {
+          // 访问一个报错的 api，模拟 500 错误
+          const xhr = new XMLHttpRequest();
+          xhr.open("get", "http://localhost:3000/error?name=test", true);
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.onload = function () {
+            // 在 onload 事件中检查 xhr.status 是否在 200-299 的范围内。如 404 或 500 错误，都会在这里进行监控上报。
+            console.log("onload: ", xhr);
+          };
+          xhr.onerror = function (error) {
+            // onerror 事件主要用于处理 跨域问题、网络错误 等无法正常连接到服务器的情况，例如本地无网络。
+            console.log("error: ", error, xhr);
+          };
+          xhr.send();
+        }, 3000);
+      };
+    </script>
+  </body>
+</html>
+

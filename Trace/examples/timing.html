@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>timing</title>
+    <!-- <script src="../dist/myMonitor.js"></script> -->
+  </head>
+  <body>
+    <img src="https://picsum.photos/200/300" alt="" />
+    <script>
+      window.addEventListener("load", () => {
+        // 新版浏览器 API：PerformanceNavigationTiming 提供了关于页面加载性能的详细信息，替代旧的 performance.timing
+        if (performance.getEntriesByType) {
+          const perfEntries = performance.getEntriesByType("navigation");
+          if (perfEntries.length > 0) {
+            const navigationEntry = perfEntries[0];
+            const { domContentLoadedEventStart, loadEventStart, fetchStart } = navigationEntry;
+
+            const DOMContentLoadedTime = domContentLoadedEventStart - fetchStart;
+            console.log(`DOMContentLoaded 的执行时间：${DOMContentLoadedTime}ms`);
+
+            const loadTime = loadEventStart - fetchStart;
+            console.log(`load 页面完整的加载时间：${loadTime}ms`);
+          }
+        }
+        // 旧版浏览器降级使用 performance.timing
+        else {
+          const { fetchStart, domContentLoadedEventStart, loadEventStart } = performance.timing;
+
+          const DOMContentLoadedTime = domContentLoadedEventStart - fetchStart;
+          console.log(`---DOMContentLoaded 的执行时间：${DOMContentLoadedTime}ms`);
+
+          const loadTime = loadEventStart - fetchStart;
+          console.log(`load 页面完整的加载时间：${loadTime}ms`);
+        }
+      });
+    </script>
+  </body>
+</html>

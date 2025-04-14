@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../dist/myMonitor.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // 0.5 后进行首次像素绘制
+      setTimeout(() => {
+        root.style.backgroundColor = "gray";
+        root.style.height = "100px";
+      }, 500);
+
+      // 1s 后在页面呈现有效内容
+      setTimeout(() => {
+        root.innerHTML = "content";
+      }, 1000);
+
+      // 1.5s 后向页面添加 有意义（属性标识） 的元素
+      setTimeout(() => {
+        const ele = document.createElement("div");
+        ele.style.backgroundColor = "red";
+        ele.innerHTML = "meaningful ele.";
+        ele.setAttribute("elementtiming", "meaningful ele"); // 设置 root 元素为「最有意义的元素」
+        document.body.appendChild(ele);
+      }, 1500);
+
+      // 2s 后更新最大内容
+      setTimeout(() => {
+        const div1 = document.createElement("div");
+        div1.innerHTML = "这是一段很长的文本";
+        document.body.appendChild(div1);
+
+        setTimeout(() => {
+          const div2 = document.createElement("div");
+          div2.innerHTML = "这是一段很长很长很长的文本";
+          document.body.appendChild(div2);
+        }, 500);
+      }, 2000);
+    </script>
+  </body>
+</html>

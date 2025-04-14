@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../dist/myMonitor.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <input type="button" value="点击抛出 Promise 错误" onclick="promiseErrorClick()" />
+    </div>
+
+    <script>
+      function promiseErrorClick() {
+        new Promise(function (resolve, reject) {
+          // 抛出错误方式 1：
+          // window.someVal.error = "error";
+          // 抛出错误 2：
+          reject("错误原因：模拟一个 Promise 错误。");
+        });
+        // .catch(err => {
+        //   console.log("err");
+        // });
+      }
+    </script>
+  </body>
+</html>

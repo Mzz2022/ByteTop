@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>长任务</title>
+    <script src="../dist/myMonitor.js"></script>
+  </head>
+  <body>
+    <button id="longTaskBtn">长任务</button>
+    <script>
+      function longTask() {
+        const start = Date.now();
+        // console.log("longTask开始 start");
+        while (Date.now() < 200 + start) {}
+        // console.log("longTask结束 end", Date.now() - start);
+      }
+      longTaskBtn.addEventListener("click", longTask);
+    </script>
+  </body>
+</html>
