@@ -16,7 +16,7 @@ COPY .npmrc ./
 
 # 复制前端项目配置和源代码
 COPY Platform ./Platform
-COPY Tracing ./Tracing
+COPY Trace ./Trace
 
 # 安装依赖
 RUN pnpm install

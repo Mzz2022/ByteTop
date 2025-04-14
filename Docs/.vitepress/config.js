@@ -24,6 +24,8 @@ export default {
         ],
       },
     ],
-    socialLinks: [{ icon: "github", link: "https://github.com/bytetop" }],
+    socialLinks: [
+      { icon: "github", link: "https://github.com/Mzz2022/bytetop" },
+    ],
   },
 };

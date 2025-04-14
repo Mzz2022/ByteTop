@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@bytetop/tracing": "workspace:*",
+    "@bytetop/trace": "workspace:*",
     "@nestjs/cache-manager": "^2.2.1",
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",

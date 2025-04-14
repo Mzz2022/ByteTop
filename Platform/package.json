@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@bytetop/tracing": "workspace:*",
+    "@bytetop/trace": "workspace:*",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@heroui/button": "2.2.9",

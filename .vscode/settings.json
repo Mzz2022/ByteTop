@@ -13,5 +13,8 @@
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  } // set as "true" to run 'prettier' last not first
+  },
+  "cSpell.words": [
+    "bytetop"
+  ] // set as "true" to run 'prettier' last not first
 }

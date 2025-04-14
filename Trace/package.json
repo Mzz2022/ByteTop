@@ -1,5 +1,5 @@
 {
-  "name": "bytetop-sdk",
+  "name": "@bytetop/trace",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "build": "rollup -c rollup.config.js -w"
   },
   "keywords": [],
-  "author": "",
+  "author": "Luckyfif",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.26.4",

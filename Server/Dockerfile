@@ -12,7 +12,7 @@ RUN pnpm config set strict-peer-dependencies false
 
 COPY package.json pnpm-workspace.yaml ./
 COPY Server/package.json ./Server/
-COPY Tracing/package.json ./Tracing/
+COPY Trace/package.json ./Trace/
 
 # 安装所有依赖
 RUN pnpm install
@@ -22,7 +22,7 @@ COPY Server/prisma ./Server/prisma
 COPY Server/tsconfig*.json ./Server/
 COPY Server/nest-cli.json ./Server/
 COPY Server ./Server
-COPY Tracing ./Tracing
+COPY Trace ./Trace
 
 WORKDIR /project/Server
 
@@ -44,7 +44,7 @@ WORKDIR /project
 # 复制 workspace 配置
 COPY package.json pnpm-workspace.yaml ./
 COPY Server/package.json ./Server/
-COPY Tracing/package.json ./Tracing/
+COPY Trace/package.json ./Trace/
 
 # 复制 prisma 文件
 COPY Server/prisma ./Server/prisma
