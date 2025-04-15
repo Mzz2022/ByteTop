@@ -86,22 +86,34 @@ export interface LongTaskLog {
 }
 
 // 监控种类日志
-export type MonitorTypeLog = ErrorLog | PaintLog | TimingLog | LongTaskLog | UserBehaviorLog;
+export type MonitorTypeLog =
+  | ErrorLog
+  | PaintLog
+  | TimingLog
+  | LongTaskLog
+  | UserBehaviorLog;
 
 // 上报监控日志
 export type MonitorLog = { baseLog: BaseLog } & MonitorTypeLog;
 
-// 新增配置类型
+export interface batchConfig {
+  delay: number;
+  maxItems: number;
+}
+// 在 SendStrategyConfig 接口中添加 idle 配置
+export interface SendStrategyConfig {
+  realtime?: boolean;
+  batch?: batchConfig;
+  idle?: {
+    timeout?: number;
+    maxTasksPerIdle?: number;
+  };
+}
+
+// 更新 MonitorConfig 结构
 export interface MonitorConfig {
   plugins?: string[];
-  sendStrategy?: {
-    realtime?: boolean;
-    batch?: {
-      delay?: number;
-      maxItems?: number;
-    };
-  };
-  // 新增用户行为配置
+  sendStrategy?: SendStrategyConfig; // 使用更新后的配置结构
   userBehavior?: {
     eventWhitelist?: string[];
     exposureThreshold?: number;
@@ -111,7 +123,7 @@ export interface MonitorConfig {
 // 新增批量数据类型
 export interface BatchLog {
   type: "batch";
-  items: Array< ErrorLog | PaintLog | TimingLog | LongTaskLog>;
+  items: Array<ErrorLog | PaintLog | TimingLog | LongTaskLog>;
 }
 export interface UserBehaviorLog {
   type: "userBehavior";
@@ -127,7 +139,7 @@ export interface UserBehaviorLog {
     formData?: Record<string, FormDataEntryValue>;
   };
   // 新增 dataExposure 属性
-  dataExposure?: string; 
+  dataExposure?: string;
 }
 
 export interface BehaviorConfig {
