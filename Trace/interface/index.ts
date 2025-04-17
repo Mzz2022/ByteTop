@@ -114,10 +114,7 @@ export interface SendStrategyConfig {
 export interface MonitorConfig {
   plugins?: string[];
   sendStrategy?: SendStrategyConfig; // 使用更新后的配置结构
-  userBehavior?: {
-    eventWhitelist?: string[];
-    exposureThreshold?: number;
-  };
+  userBehavior?: BehaviorConfig;
 }
 
 // 新增批量数据类型

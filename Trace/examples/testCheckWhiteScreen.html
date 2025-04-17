@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>测试白屏检测工具</title>
+  <!-- 引入打包后的白屏检测脚本 -->
+  <script src="../dist/myMonitor.js"></script>
+</head>
+
+<body>
+  <div id="">
+
+  </div>
+
+  <script>
+    // 获取按钮和结果显示元素
+    const simulateWhiteScreenBtn = document.getElementById('simulateWhiteScreenBtn');
+    const restoreNormalBtn = document.getElementById('restoreNormalBtn');
+    const resultDiv = document.getElementById('result');
+    const mainDiv = document.getElementById('main');
+
+    // 模拟白屏的函数
+    function simulateWhiteScreen() {
+      // 隐藏主要元素模拟白屏
+      mainDiv.style.display = 'none';
+      checkAndShowResult();
+    }
+
+    // 恢复正常显示的函数
+    function restoreNormal() {
+      // 显示主要元素恢复正常
+      mainDiv.style.display = 'block';
+      checkAndShowResult();
+    }
+
+    // 执行白屏检测并显示结果的函数
+    function checkAndShowResult() {
+    }
+
+    // 绑定按钮点击事件
+    simulateWhiteScreenBtn.addEventListener('click', simulateWhiteScreen);
+    restoreNormalBtn.addEventListener('click', restoreNormal);
+
+    // 页面加载完成后进行一次初始检测
+    window.addEventListener('load', checkAndShowResult);
+  </script>
+</body>
+
+</html>

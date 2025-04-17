@@ -16,7 +16,6 @@ type PluginKeys =
   | "paint"
   | "timing"
   | "userBehavior";
-
 // 明确指定映射表类型
 // 在PLUGIN_MAP中添加
 type PluginFunction = (config?: any) => void;
@@ -49,9 +48,17 @@ export function initMonitor(config: MonitorConfig = {}) {
   });
 }
 
-// 按需初始化
-initMonitor({
-  plugins: ["jsError", "xhr", "longTask", "paint", "timing", "userBehavior"], // 只启用错误监控
+const plugins = [
+  "jsError",
+  "xhr",
+  "longTask",
+  "paint",
+  "timing",
+  "userBehavior",
+];
+
+const config = {
+  plugins: plugins,
   sendStrategy: {
     realtime: true,
     batch: {
@@ -64,4 +71,6 @@ initMonitor({
     eventWhitelist: ["click", "submit", "dblclick"], // 白名单事件
     exposureThreshold: 0.5, // 曝光阈值
   },
-});
+};
+// 按需初始化
+initMonitor(config);
